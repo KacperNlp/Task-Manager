@@ -1,11 +1,13 @@
 <template>
-    <ul>
-        <li v-for="task in tasks" @key="task.id">
-            <h3>{{ task.title }}</h3>
-            <p>{{ task.description }}</p>
-            <AppButton>
-                Usuń
-            </AppButton>
+    <ul class="flex flex-col gap-2">
+        <li v-for="task in tasks" @key="task.id" class="relative py-6 border-b">
+            <h3 class="text-lg font-semibold">{{ task.title }}</h3>
+            <p class="text-sm text-gray-600">{{ task.description }}</p>
+            <div class="absolute bottom-2 right-0 flex justify-end">
+                <AppButton class="text-sm">
+                    Usuń
+                </AppButton>
+            </div>
         </li>
     </ul>
 </template>
