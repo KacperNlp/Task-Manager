@@ -3,6 +3,9 @@
         <li v-for="task in tasks" @key="task.id">
             <h3>{{ task.title }}</h3>
             <p>{{ task.description }}</p>
+            <AppButton>
+                Usuń
+            </AppButton>
         </li>
     </ul>
 </template>
