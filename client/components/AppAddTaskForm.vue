@@ -27,8 +27,11 @@ const emit = defineEmits(['closeForm']);
 
 async function addTask() {
     try {
-        console.log('Send data');
         emit('closeForm');
+
+        form.title = '';
+        form.description = '';
+        form.date = '';
     } catch (error) {
         console.error(error);
     }
