@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <AppContainer>
     <AppTasksList />
-  </div>
+  </AppContainer>
 </template>
