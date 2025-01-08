@@ -1,17 +1,24 @@
 const express = require("express");
 const router = express.Router();
+const Task = require("../models/Task");
 
-router.get("/", (req, res) => {
-  const response = [
-    { id: 1, title: "Task 1", description: "Description 1" },
-    { id: 2, title: "Task 2", description: "Description 2" },
-  ];
-
-  res.send(response);
+router.get("/", async (req, res) => {
+  try {
+    const tasks = await Task.find();
+    res.json(tasks);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
-router.post("/add", (req, res) => {
-  res.send("add comments");
+router.post("/add", async (req, res) => {
+  try {
+    const task = new Task(req.body);
+    const savedTask = await task.save();
+    res.json(savedTask);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 module.exports = router;
