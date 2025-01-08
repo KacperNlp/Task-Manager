@@ -4,7 +4,13 @@
       <h3 class="text-lg font-semibold">{{ task.title }}</h3>
       <p class="text-sm text-gray-600">{{ task.description }}</p>
       <div class="absolute bottom-2 right-0 flex justify-end">
-        <AppButton class="text-sm" btnType="danger"> Usuń </AppButton>
+        <AppButton
+          @click="deleteTask(task._id)"
+          class="text-sm"
+          btnType="danger"
+        >
+          Usuń
+        </AppButton>
       </div>
     </li>
   </ul>
@@ -26,7 +32,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import type { Task } from "../types";
+import type { Task } from "../types/types";
 
 const tasks = ref<Task[]>([]);
 const formIsActive = ref(false);
@@ -50,6 +56,18 @@ function changeAddTaskFormVisivility() {
 function updateTasks() {
   changeAddTaskFormVisivility();
   getUserTasks();
+}
+
+async function deleteTask(taskId: number) {
+  try {
+    await $fetch(`http://localhost:8080/tasks/${taskId}`, {
+      method: "DELETE",
+    });
+
+    getUserTasks();
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 await getUserTasks();
