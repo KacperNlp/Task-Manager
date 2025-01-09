@@ -1,5 +1,7 @@
 <template>
-  <AppContainer>
-    <AppTasksList />
-  </AppContainer>
+  <div>
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
+  </div>
 </template>
