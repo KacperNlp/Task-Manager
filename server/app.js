@@ -9,6 +9,7 @@ const app = express();
 const port = process.env.PORT || 8080;
 
 const tasks = require("./routes/tasks");
+const users = require("./routes/users");  
 
 app.use(express.json());
 app.use(cors());
@@ -23,6 +24,7 @@ mongoose
 
 //routes
 app.use("/tasks", tasks);
+app.use("/", users);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

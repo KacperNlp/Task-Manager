@@ -1,39 +1,58 @@
 <template>
   <div class="flex justify-center items-center h-screen">
-    <AppCard class="shadow-md">
+    <AppCard class="w-80 md:w-96 shadow-md">
+      <h1 class="text-2xl font-semibold text-center mb-2">
+        {{ loginCardTitle }}
+      </h1>
       <form action="POST">
-        <div>
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" required />
-        </div>
-        <div>
-          <label for="password">Password</label>
-          <input type="password" id="password" name="password" required />
-        </div>
-        <div v-if="!userHasAccount">
-          <label for="password">Repeat Password</label>
-          <input type="password" id="password" name="password" required />
-        </div>
+        <AppInput v-model="form.email" type="email" id="email" name="email" label="Email" />
+        <AppInput v-model="form.password" type="password" id="password" name="password" label="Password" />
+        <AppInput v-if="!userHasAccount" v-model="form.repeatPassword" type="password" id="repeatPassword"
+          name="repeatPassword" label="Repeat password" />
         <div class="flex flex-col gap-2 justify-between mt-4">
-          <button type="submit">Login</button>
-          <AppButton type="button" @click="changeUserHasAccount">
-            {{
-              userHasAccount
-                ? "Create an account"
-                : "Login with existing account"
-            }}
-          </AppButton>
+          <AppButton @click="submitForm" type="submit">{{ loginCardTitle }}</AppButton>
+          <button type="button" @click="changeUserHasAccount" class="text-gray-500 text-sm">
+            {{ btnText }}
+          </button>
         </div>
       </form>
     </AppCard>
   </div>
 </template>
-<script>
-const { login } = useAuth();
+<script setup lang="ts">
+const { login, register } = useAuth();
 
 const userHasAccount = ref(true);
+const form = reactive({
+  email: "",
+  password: "",
+  repeatPassword: "",
+});
+
+const loginCardTitle = computed(() => {
+  return userHasAccount.value ? "Login" : "Register";
+});
+
+const btnText = computed(() => {
+  return userHasAccount.value ? "Create an account" : "Login with existing account";
+});
 
 function changeUserHasAccount() {
   userHasAccount.value = !userHasAccount.value;
+}
+
+function submitForm(e: Event) {
+  e.preventDefault();
+
+  if (userHasAccount.value) {
+    login(form.email, form.password);
+  } else {
+    if (form.password !== form.repeatPassword) {
+      alert("Passwords do not match");
+      return;
+    }
+
+    register(form.email, form.password);
+  }
 }
 </script>
