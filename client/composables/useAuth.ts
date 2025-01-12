@@ -1,7 +1,7 @@
 export function useAuth() {
     const login = async (email: string, password: string) => {
         try {
-            const res = $fetch('http://localhost:8080/login', {
+            const res = await $fetch<{ success?: boolean }>('http://localhost:8080/login', {
                 method: 'POST',
                 credentials: "include",
                 headers: {
@@ -10,7 +10,7 @@ export function useAuth() {
                 body: JSON.stringify({ email, password })
             });
 
-            return res;
+            return res?.success;
         } catch (error) {
             console.error("Login Error:", error);
         }
@@ -18,7 +18,7 @@ export function useAuth() {
 
     const register = async (email: string, password: string) => {
         try {
-            const res = $fetch('http://localhost:8080/register', {
+            const res = await $fetch<{ success?: boolean }>('http://localhost:8080/register', {
                 method: 'POST',
                 credentials: "include",
                 headers: {
@@ -27,7 +27,7 @@ export function useAuth() {
                 body: JSON.stringify({ email, password })
             });
 
-            return res;
+            return res?.success;
         } catch (error) {
             console.error("Register Error:", error);
         }
