@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
+const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 
 dotenv.config();
@@ -9,13 +10,16 @@ const app = express();
 const port = process.env.PORT || 8080;
 
 const tasks = require("./routes/tasks");
-const users = require("./routes/users");  
+const users = require("./routes/users");
 
 app.use(express.json());
-app.use(cors({
-  origin: process.env.CLIENT_URL,
-  credentials: true,
-}));
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL,
+    credentials: true,
+  })
+);
+app.use(cookieParser());
 
 mongoose
   .connect(process.env.MONGO_URI, {

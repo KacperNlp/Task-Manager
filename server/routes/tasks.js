@@ -4,7 +4,6 @@ const Task = require("../models/Task");
 
 router.get("/", async (req, res) => {
   try {
-    console.log(req.body);
     const tasks = await Task.find({ user_id: req.cookies.user_id });
     res.json(tasks);
   } catch (err) {
@@ -14,7 +13,8 @@ router.get("/", async (req, res) => {
 
 router.post("/add", async (req, res) => {
   try {
-    const task = new Task(req.body);
+    const taskData = { ...req.body, user_id: req.cookies.user_id };
+    const task = new Task(taskData);
     const savedTask = await task.save();
     res.json(savedTask);
   } catch (err) {

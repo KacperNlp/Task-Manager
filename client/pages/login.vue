@@ -5,14 +5,40 @@
         {{ loginCardTitle }}
       </h1>
       <form action="POST">
-        <AppInput v-model="form.email" :is-required="true" type="email" inputId="email" name="email" label="Email" />
-        <AppInput v-model="form.password" :is-required="true" type="password" inputId="password" name="password"
-          label="Password" />
-        <AppInput v-if="!userHasAccount" v-model="form.repeatPassword" :is-required="true" type="password"
-          inputId="repeatPassword" name="repeatPassword" label="Repeat password" />
+        <AppInput
+          v-model="form.email"
+          :is-required="true"
+          type="email"
+          inputId="email"
+          name="email"
+          label="Email"
+        />
+        <AppInput
+          v-model="form.password"
+          :is-required="true"
+          type="password"
+          inputId="password"
+          name="password"
+          label="Password"
+        />
+        <AppInput
+          v-if="!userHasAccount"
+          v-model="form.repeatPassword"
+          :is-required="true"
+          type="password"
+          inputId="repeatPassword"
+          name="repeatPassword"
+          label="Repeat password"
+        />
         <div class="flex flex-col gap-2 justify-between mt-4">
-          <AppButton @click="submitForm" btn-type="primary" type="submit">{{ loginCardTitle }}</AppButton>
-          <button type="button" @click="changeUserHasAccount" class="text-gray-500 text-sm">
+          <AppButton @click="submitForm" btn-type="primary" type="submit">{{
+            loginCardTitle
+          }}</AppButton>
+          <button
+            type="button"
+            @click="changeUserHasAccount"
+            class="text-gray-500 text-sm"
+          >
             {{ btnText }}
           </button>
         </div>
@@ -37,7 +63,9 @@ const loginCardTitle = computed(() => {
 });
 
 const btnText = computed(() => {
-  return userHasAccount.value ? "Create an account" : "Login with existing account";
+  return userHasAccount.value
+    ? "Create an account"
+    : "Login with existing account";
 });
 
 function changeUserHasAccount() {
