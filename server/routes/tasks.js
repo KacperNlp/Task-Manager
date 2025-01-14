@@ -4,7 +4,8 @@ const Task = require("../models/Task");
 
 router.get("/", async (req, res) => {
   try {
-    const tasks = await Task.find();
+    console.log(req.body);
+    const tasks = await Task.find({ user_id: req.cookies.user_id });
     res.json(tasks);
   } catch (err) {
     res.status(500).json({ error: err.message });

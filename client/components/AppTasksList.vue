@@ -4,11 +4,7 @@
       <h3 class="text-lg font-semibold">{{ task.title }}</h3>
       <p class="text-sm text-gray-600">{{ task.description }}</p>
       <div class="absolute bottom-2 right-0 flex justify-end">
-        <AppButton
-          @click="deleteTask(task._id)"
-          class="text-sm"
-          btnType="danger"
-        >
+        <AppButton @click="deleteTask(task._id)" class="text-sm" btnType="danger">
           Usuń
         </AppButton>
       </div>
@@ -16,23 +12,18 @@
   </ul>
   <p v-else class="text-center text-gray-600">Brak zadań</p>
   <div class="mt-4">
-    <AppButton
-      v-show="!formIsActive"
-      @click="changeAddTaskFormVisivility"
-      class="text-sm"
-    >
+    <AppButton v-show="!formIsActive" @click="changeAddTaskFormVisivility" class="text-sm">
       + Dodaj nowe zadanie
     </AppButton>
     <AppCard v-show="formIsActive">
-      <AppAddTaskForm
-        @closeForm="changeAddTaskFormVisivility"
-        @updateTasks="updateTasks"
-      />
+      <AppAddTaskForm @closeForm="changeAddTaskFormVisivility" @updateTasks="updateTasks" />
     </AppCard>
   </div>
 </template>
 <script setup lang="ts">
 import type { Task } from "../types/types";
+
+const userId = useCookie("user_id");
 
 const tasks = ref<Task[]>([]);
 const formIsActive = ref(false);
@@ -41,6 +32,7 @@ async function getUserTasks() {
   try {
     const response = await $fetch("http://localhost:8080/tasks", {
       method: "GET",
+      credentials: "include",
     });
 
     tasks.value = response;
@@ -62,6 +54,7 @@ async function deleteTask(taskId: number) {
   try {
     await $fetch(`http://localhost:8080/tasks/${taskId}`, {
       method: "DELETE",
+      credentials: "include",
     });
 
     getUserTasks();

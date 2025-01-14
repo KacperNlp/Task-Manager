@@ -22,6 +22,12 @@ router.post('/register', async (req, res) => {
             path: '/',
         })
 
+        res.cookie('user_id', user._id, {
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict',
+            path: '/',
+        });
+
         return res.status(200).json({ success: true, message: "User registered" });
     } catch (err) {        
         res.status(500).json({ error: err.message });
@@ -45,6 +51,12 @@ router.post('/login', async (req, res) => {
             sameSite: 'strict',
             path: '/',
         })
+         
+        res.cookie('user_id', user._id, {
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict',
+            path: '/',
+        });
 
         return res.status(200).json({ success: true, message: 'User logged in' });
     } catch (err) {        
