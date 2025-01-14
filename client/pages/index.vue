@@ -1,5 +1,8 @@
 <template>
-  <AppContainer>
-    <AppTasksList />
-  </AppContainer>
+  <div>
+    <AppHeader />
+    <AppContainer>
+      <AppTasksList />
+    </AppContainer>
+  </div>
 </template>

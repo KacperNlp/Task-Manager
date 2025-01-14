@@ -33,5 +33,21 @@ export function useAuth() {
         }
     }
 
-    return {  login, register };
+    const logout = async () => {
+        try {         
+            const res = await $fetch<{ success?: boolean }>('http://localhost:8080/logout', {
+                method: 'POST',
+                credentials: "include",
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            return res?.success;
+        } catch (error) {
+            console.error("Logout Error:", error);
+        }
+    }
+
+    return {  login, register, logout };
 }
