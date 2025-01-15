@@ -3,6 +3,7 @@
     <li v-for="task in tasks" @key="task._id" class="relative py-6 border-b">
       <h3 class="text-lg font-semibold">{{ task.title }}</h3>
       <p class="text-sm text-gray-600">{{ task.description }}</p>
+      <strong>{{ task.date }}</strong>
       <div class="absolute bottom-2 right-0 flex justify-end">
         <AppButton
           @click="deleteTask(task._id)"
@@ -35,6 +36,7 @@
 import type { Task } from "../types/types";
 
 const tasks = ref<Task[]>([]);
+const oldTasks = ref<Task[]>([]);
 const formIsActive = ref(false);
 
 async function getUserTasks() {
@@ -44,7 +46,8 @@ async function getUserTasks() {
       credentials: "include",
     });
 
-    tasks.value = response;
+    tasks.value = response.todayTasks;
+    oldTasks.value = response.oldTasks;
   } catch (error) {
     console.error(error);
   }

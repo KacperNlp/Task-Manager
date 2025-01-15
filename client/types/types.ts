@@ -3,6 +3,7 @@ interface Task {
   title: string;
   description: string;
   completed: boolean;
+  date: Date
 }
 
 export type { Task };

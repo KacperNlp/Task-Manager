@@ -15,6 +15,14 @@
         class="text-sm p-2 md:p-4 border rounded-md"
       />
     </label>
+    <label class="flex flex-col gap-2 mb-3">
+      <span class="text-sm text-gray-600">Data realizacji</span>
+      <input
+        v-model="form.date"
+        class="text-sm p-2 md:p-4 border rounded-md"
+        type="date"
+      />
+    </label>
 
     <div class="flex flex-row justify-end gap-2 mt-4">
       <AppButton @click="addTask" class="text-sm">Dodaj zadanie</AppButton>
