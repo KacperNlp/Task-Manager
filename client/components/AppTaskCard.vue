@@ -1,16 +1,25 @@
 <template>
-  <li class="relative py-6 border-b">
+  <li
+    class="relative py-4 px-2 lg:px-4 border rounded-md hover:shadow-md duration-200 cursor-pointer"
+  >
     <div class="flex flex-col md:flex-row justify-between items-start gap-2">
-      <h3 class="text-lg font-semibold">{{ task.title }}</h3>
+      <h3 class="text-base font-semibold">{{ task.title }}</h3>
       <AppTaskStatus :task-status="task.status" />
     </div>
     <p class="text-sm text-gray-600">{{ task.description }}</p>
-    <strong>{{ task.date }}</strong>
-    <div class="absolute bottom-2 right-0 flex justify-end gap-1">
-      <AppButton v-if="!isTaskDone" @click="changeTaskStatus">{{
-        btnLabel
-      }}</AppButton>
-      <AppButton @click="deleteTask" btnType="danger"> Usuń </AppButton>
+    <div
+      class="flex flex-col md:flex-row justify-between items-center gap-2 mt-2"
+    >
+      <div class="flex flex-col gap">
+        <span class="text-xs text-gray-600">Data:</span>
+        <strong class="text-sm font-semibold">{{ taskDate }}</strong>
+      </div>
+      <div class="flex justify-end gap-1">
+        <AppButton v-if="!isTaskDone" @click="changeTaskStatus">{{
+          btnLabel
+        }}</AppButton>
+        <AppButton @click="deleteTask" btnType="danger"> Usuń </AppButton>
+      </div>
     </div>
   </li>
 </template>
@@ -30,6 +39,7 @@ const isTaskDone = computed(() => props.task.status === "Done");
 const btnLabel = computed(() =>
   props.task.status === "NotStarted" ? "Rozpocznij" : "Zakończ"
 );
+const taskDate = computed(() => new Date(props.task.date).toLocaleDateString());
 
 async function deleteTask() {
   try {

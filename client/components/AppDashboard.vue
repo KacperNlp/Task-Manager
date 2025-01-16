@@ -5,8 +5,6 @@
       @updateTasks="getUserTasks"
       @updateTaskStatus="updateTaskStatus"
     />
-    <hr />
-    <p>Stare zadania</p>
     <AppTasksList
       :tasks="oldTasks"
       @updateTasks="getUserTasks"
