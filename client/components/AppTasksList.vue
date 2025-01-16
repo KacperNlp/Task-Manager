@@ -1,4 +1,4 @@
-<template>
+<template lang="">
   <ul v-if="tasks.length" class="flex flex-col gap-2">
     <li v-for="task in tasks" @key="task._id" class="relative py-6 border-b">
       <h3 class="text-lg font-semibold">{{ task.title }}</h3>
@@ -15,52 +15,17 @@
       </div>
     </li>
   </ul>
-  <p v-else class="text-center text-gray-600">Brak zadań</p>
-  <div class="mt-4">
-    <AppButton
-      v-show="!formIsActive"
-      @click="changeAddTaskFormVisivility"
-      class="text-sm"
-    >
-      + Dodaj nowe zadanie
-    </AppButton>
-    <AppCard v-show="formIsActive">
-      <AppAddTaskForm
-        @closeForm="changeAddTaskFormVisivility"
-        @updateTasks="updateTasks"
-      />
-    </AppCard>
-  </div>
 </template>
-<script setup lang="ts">
-import type { Task } from "../types/types";
 
-const tasks = ref<Task[]>([]);
-const oldTasks = ref<Task[]>([]);
-const formIsActive = ref(false);
+<script lang="ts" setup>
+import type { Task } from "~/types/types";
 
-async function getUserTasks() {
-  try {
-    const response = await $fetch("http://localhost:8080/tasks", {
-      method: "GET",
-      credentials: "include",
-    });
-
-    tasks.value = response.todayTasks;
-    oldTasks.value = response.oldTasks;
-  } catch (error) {
-    console.error(error);
-  }
+interface Props {
+  tasks: Task | undefined;
 }
 
-function changeAddTaskFormVisivility() {
-  formIsActive.value = !formIsActive.value;
-}
-
-function updateTasks() {
-  changeAddTaskFormVisivility();
-  getUserTasks();
-}
+defineProps<Props>();
+const emit = defineEmits(["updateTasks"]);
 
 async function deleteTask(taskId: number | string) {
   try {
@@ -69,11 +34,9 @@ async function deleteTask(taskId: number | string) {
       credentials: "include",
     });
 
-    getUserTasks();
+    emit("updateTasks");
   } catch (error) {
     console.error(error);
   }
 }
-
-await getUserTasks();
 </script>

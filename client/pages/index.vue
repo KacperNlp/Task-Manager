@@ -2,7 +2,7 @@
   <div>
     <AppHeader />
     <AppContainer>
-      <AppTasksList />
+      <AppDashboard />
     </AppContainer>
   </div>
 </template>
