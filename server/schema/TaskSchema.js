@@ -7,6 +7,11 @@ const TaskSchema = new Schema({
   description: String,
   date: Date,
   user_id: String,
+  status: {
+    type: String,
+    enum: ["Done", "InProgress", "NotStarted"],
+    default: "NotStarted",
+  },
 });
 
 module.exports = TaskSchema;

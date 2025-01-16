@@ -1,16 +1,20 @@
 <template>
   <section>
-    <AppTasksList :tasks="tasks" @updateTasks="getUserTasks" />
+    <AppTasksList
+      :tasks="tasks"
+      @updateTasks="getUserTasks"
+      @updateTaskStatus="updateTaskStatus"
+    />
     <hr />
     <p>Stare zadania</p>
-    <AppTasksList :tasks="oldTasks" @updateTasks="getUserTasks" />
+    <AppTasksList
+      :tasks="oldTasks"
+      @updateTasks="getUserTasks"
+      @updateTaskStatus="updateTaskStatus"
+    />
   </section>
   <div class="mt-4">
-    <AppButton
-      v-show="!formIsActive"
-      @click="changeAddTaskFormVisivility"
-      class="text-sm"
-    >
+    <AppButton v-show="!formIsActive" @click="changeAddTaskFormVisivility">
       + Dodaj nowe zadanie
     </AppButton>
     <AppCard v-show="formIsActive">
@@ -49,6 +53,10 @@ function changeAddTaskFormVisivility() {
 function updateTasks() {
   changeAddTaskFormVisivility();
   getUserTasks();
+}
+
+function updateTaskStatus(task: Task) {
+  console.log("Hello there!");
 }
 
 await getUserTasks();

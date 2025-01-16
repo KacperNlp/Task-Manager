@@ -38,13 +38,30 @@ router.post("/add", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   try {
     const task = await Task.findByIdAndDelete(req.params.id);
-    console.log("asdfasdf");
 
     if (!task) {
       return res.status(404).json({ message: "Task not found" });
     }
 
     res.json({ message: "Task deleted successfully", deletedTask: task });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+router.put("/status/:id", async (req, res) => {
+  try {
+    const task = await Task.findById(req.params.id);
+
+    if (task.status === "NotStarted") task.status = "InProgress";
+    else if (task.status === "InProgress") task.status = "Done";
+
+    await task.save();
+
+    res.json({
+      message: "Task status updated successfully",
+      updatedTask: task,
+    });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
