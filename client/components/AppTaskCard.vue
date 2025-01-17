@@ -14,11 +14,35 @@
         <span class="text-xs text-gray-600">Data:</span>
         <strong class="text-sm font-semibold">{{ taskDate }}</strong>
       </div>
-      <div class="flex justify-end gap-1">
-        <AppButton v-if="!isTaskDone" @click="changeTaskStatus">{{
-          btnLabel
-        }}</AppButton>
-        <AppButton @click="deleteTask" btnType="danger"> Usuń </AppButton>
+      <div class="flex justify-end gap-2">
+        <button
+          v-if="!isTaskDone"
+          @click="changeTaskStatus"
+          :aria-label="btnLabel"
+          :title="btnLabel"
+        >
+          <Icon
+            v-if="isTaskInProgress"
+            name="lets-icons:check-fill"
+            class="bg-green-500 hover:bg-green-700 text-xl duration-200"
+          />
+          <Icon
+            v-else
+            name="majesticons:rocket-3-start-line"
+            class="bg-blue-500 hover:bg-blue-700 text-xl duration-200"
+          />
+        </button>
+        <button
+          @click="deleteTask"
+          type="button"
+          title="Usuń zadanie"
+          aria-label="Usuń zadanie"
+        >
+          <Icon
+            name="iconamoon:trash-light"
+            class="bg-rose-500 hover:bg-rose-700 text-xl duration-200"
+          />
+        </button>
       </div>
     </div>
   </li>
@@ -39,6 +63,7 @@ const isTaskDone = computed(() => props.task.status === "Done");
 const btnLabel = computed(() =>
   props.task.status === "NotStarted" ? "Rozpocznij" : "Zakończ"
 );
+const isTaskInProgress = computed(() => props.task.status === "InProgress");
 const taskDate = computed(() => new Date(props.task.date).toLocaleDateString());
 
 async function deleteTask() {
