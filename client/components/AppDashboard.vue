@@ -3,7 +3,7 @@
     <section>
       <AppColumnHeadline>Przeterminowane</AppColumnHeadline>
       <AppTasksList
-        :tasks="oldTasks"
+        :tasks="notStartedTasksOld"
         @updateTasks="getUserTasks"
         @updateTaskStatus="updateTaskStatus"
       />
@@ -11,7 +11,7 @@
     <section>
       <AppColumnHeadline>Zadania na dziś</AppColumnHeadline>
       <AppTasksList
-        :tasks="tasks"
+        :tasks="notStartedTasksToday"
         @updateTasks="getUserTasks"
         @updateTaskStatus="updateTaskStatus"
       />
@@ -30,7 +30,7 @@
     <section>
       <AppColumnHeadline>Realizowane</AppColumnHeadline>
       <AppTasksList
-        :tasks="tasks"
+        :tasks="inProgressTasks"
         @updateTasks="getUserTasks"
         @updateTaskStatus="updateTaskStatus"
       />
@@ -38,7 +38,7 @@
     <section>
       <AppColumnHeadline>Zakończone</AppColumnHeadline>
       <AppTasksList
-        :tasks="oldTasks"
+        :tasks="doneTasks"
         @updateTasks="getUserTasks"
         @updateTaskStatus="updateTaskStatus"
       />
@@ -51,6 +51,32 @@ import type { Task } from "../types/types";
 const tasks = ref<Task[]>([]);
 const oldTasks = ref<Task[]>([]);
 const formIsActive = ref(false);
+
+const doneTasks = computed(() => {
+  const todayTasksDone = tasks.value.filter((task) => task.status === "Done");
+  const oldTasksDone = oldTasks.value.filter((task) => task.status === "Done");
+
+  return [...todayTasksDone, ...oldTasksDone];
+});
+
+const inProgressTasks = computed(() => {
+  const todayTasksInProgress = tasks.value.filter(
+    (task) => task.status === "InProgress"
+  );
+  const oldTasksInPorgress = oldTasks.value.filter(
+    (task) => task.status === "InProgress"
+  );
+
+  return [...todayTasksInProgress, ...oldTasksInPorgress];
+});
+
+const notStartedTasksToday = computed(() =>
+  tasks.value.filter((task) => task.status === "NotStarted")
+);
+
+const notStartedTasksOld = computed(() =>
+  oldTasks.value.filter((task) => task.status === "NotStarted")
+);
 
 async function getUserTasks() {
   try {
