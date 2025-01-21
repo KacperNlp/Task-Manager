@@ -1,7 +1,7 @@
 <template>
   <ul v-if="isAnyComment" class="flex flex-col gap-2">
     <li v-for="comment in comments" :key="comment._id">
-      <AppComment />
+      <AppComment :comment="comment" />
     </li>
   </ul>
   <div v-else class="flex justify-center items-center h-32">

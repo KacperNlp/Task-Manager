@@ -54,10 +54,14 @@
               >Dodaj komentarz:</label
             >
             <textarea
+              v-model="newComment"
               name="comment"
               id="comment"
               class="w-full p-4 bg-gray-100"
             ></textarea>
+            <AppButton @click="addCommnet" class="text-sm w-max"
+              >Dodaj komentarz</AppButton
+            >
           </form>
         </div>
         <section>
@@ -69,12 +73,14 @@
 </template>
 
 <script lang="ts" setup>
+import { data } from "autoprefixer";
 import type { Task, Comment } from "~/types/types";
 
 interface Props {
   taskId: string;
 }
 
+const newComment = ref<string>("");
 const task = ref<Task | null>(null);
 const comments = ref<Comment[] | null>(null);
 
@@ -92,9 +98,37 @@ onMounted(async () => {
     ]);
 
     task.value = resTask;
-    comments.value = resComments;
+    comments.value = resComments.reverse();
   } catch (error) {
     console.error(error);
   }
 });
+
+async function addCommnet() {
+  try {
+    await $fetch(`http://localhost:8080/comments/add`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        text: newComment.value,
+        taskId: props.taskId,
+        date: new Date(),
+      }),
+      credentials: "include",
+    });
+
+    const res = await $fetch<Comment[]>(
+      `http://localhost:8080/comments/all/${props.taskId}`,
+      {
+        credentials: "include",
+      }
+    );
+
+    comments.value = res.reverse();
+  } catch (error) {
+    console.error(error);
+  }
+}
 </script>

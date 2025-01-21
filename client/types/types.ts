@@ -1,7 +1,7 @@
 type TaskStatus = "Done" | "InProgress" | "NotStarted";
 
 interface Task {
-  _id: number | string;
+  _id: string;
   title: string;
   description: string;
   completed: boolean;
@@ -10,11 +10,11 @@ interface Task {
 }
 
 interface Comment {
-  _id: number | string;
-  taskId: number | string;
+  _id:  string;
+  taskId: string;
+  userId: string,
   text: string;
   date: Date;
-  author: string;
 }
 
 export type { Task, TaskStatus, Comment };

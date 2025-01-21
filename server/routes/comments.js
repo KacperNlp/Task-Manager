@@ -13,4 +13,16 @@ router.get("/all/:taskId", async (req, res) => {
   }
 });
 
+router.post("/add", async (req, res) => {
+  try {
+    const commentData = { ...req.body, userId: req.cookies.user_id };
+    const comment = new Comment(commentData);
+    const savedComment = await comment.save();
+
+    res.json(savedComment);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 module.exports = router;
