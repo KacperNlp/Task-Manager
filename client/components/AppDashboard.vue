@@ -19,12 +19,17 @@
         <AppButton v-show="!formIsActive" @click="changeAddTaskFormVisivility">
           + Dodaj nowe zadanie
         </AppButton>
-        <AppCard v-show="formIsActive">
-          <AppAddTaskForm
-            @closeForm="changeAddTaskFormVisivility"
-            @updateTasks="updateTasks"
-          />
-        </AppCard>
+        <AppLayer
+          v-show="formIsActive"
+          @close-layer="changeAddTaskFormVisivility"
+        >
+          <AppCard>
+            <AppAddTaskForm
+              @closeForm="changeAddTaskFormVisivility"
+              @updateTasks="updateTasks"
+            />
+          </AppCard>
+        </AppLayer>
       </div>
     </section>
     <section>

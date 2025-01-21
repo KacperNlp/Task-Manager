@@ -1,5 +1,5 @@
 <template>
-  <form>
+  <form class="w-full max-w-[650px] min-w-96">
     <label class="flex flex-col gap-2 mb-3">
       <span class="text-sm text-gray-600">Tytuł</span>
       <input
@@ -19,12 +19,13 @@
       <span class="text-sm text-gray-600">Data realizacji</span>
       <input
         v-model="form.date"
+        :min="minDate"
         class="text-sm p-2 md:p-4 border rounded-md"
         type="date"
       />
     </label>
 
-    <div class="flex flex-row justify-end gap-2 mt-4">
+    <div class="flex flex-row justify-end gap-2 mt-8">
       <AppButton @click="addTask" class="text-sm">Dodaj zadanie</AppButton>
       <AppButton @click="$emit('closeForm')" btnType="danger" class="text-sm"
         >Anuluj</AppButton
@@ -37,10 +38,12 @@
 const form = reactive({
   title: "",
   description: "",
-  date: "",
+  date: new Date().toISOString().slice(0, 10),
 });
 
 const emit = defineEmits(["closeForm"]);
+
+const minDate = computed(() => new Date().toISOString().slice(0, 10));
 
 async function addTask() {
   try {
