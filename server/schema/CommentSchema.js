@@ -5,7 +5,7 @@ const { Schema } = mongoose;
 
 const CommentSchema = new Schema({
   taskId: String,
-  userId: String,
+  user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   date: Date,
   text: String,
 });

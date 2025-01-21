@@ -3,7 +3,7 @@
     <div class="min-w-8 h-8 border rounder-full"></div>
     <div class="w-full">
       <div class="flex justify-between mb-2">
-        <strong class="block text-sm">{{ comment.userId }}</strong>
+        <strong class="block text-sm">{{ comment.user.email }}</strong>
         <span class="text-sm font-bold text-gray-600">{{ dateOfComment }}</span>
       </div>
       <p class="text-sm font-light leading-6">

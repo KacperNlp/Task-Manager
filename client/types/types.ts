@@ -9,12 +9,17 @@ interface Task {
   status: TaskStatus
 }
 
+interface User {
+  _id: string,
+  email: string,
+}
+
 interface Comment {
   _id:  string;
   taskId: string;
-  userId: string,
+  user: User,
   text: string;
   date: Date;
 }
 
-export type { Task, TaskStatus, Comment };
+export type { Task, TaskStatus, Comment, User };
