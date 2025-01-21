@@ -9,4 +9,11 @@ interface Task {
   status: TaskStatus
 }
 
+interface Comment {
+  _id: number | string;
+  taskId: number | string;
+  text: string;
+  date: Date;
+}
+
 export type { Task, TaskStatus };

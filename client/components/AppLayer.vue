@@ -11,6 +11,7 @@
     <slot />
   </div>
 </template>
+
 <script setup lang="ts">
 const emit = defineEmits(["closeLayer"]);
 

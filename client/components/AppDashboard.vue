@@ -23,12 +23,10 @@
           v-show="formIsActive"
           @close-layer="changeAddTaskFormVisivility"
         >
-          <AppCard>
-            <AppAddTaskForm
-              @closeForm="changeAddTaskFormVisivility"
-              @updateTasks="updateTasks"
-            />
-          </AppCard>
+          <AppAddTaskForm
+            @closeForm="changeAddTaskFormVisivility"
+            @updateTasks="updateTasks"
+          />
         </AppLayer>
       </div>
     </section>

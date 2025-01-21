@@ -24,6 +24,16 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/:id", async (req, res) => {
+  try {
+    const task = await Task.findById(req.params.id);
+
+    res.json(task);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 router.post("/add", async (req, res) => {
   try {
     const taskData = { ...req.body, user_id: req.cookies.user_id };

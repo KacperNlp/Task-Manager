@@ -6,12 +6,19 @@
       :task="task"
       @updateTasks="emit('updateTasks')"
       @updateTaskStatus="updateTaskStatus"
+      @click="openTask(task._id)"
     />
   </ul>
+  <AppLayer v-if="isTaskModalActive" @close-layer="closeTaskModal">
+    <AppTaskModal :task-id="clickedTaskId" />
+  </AppLayer>
 </template>
 
 <script lang="ts" setup>
 import type { Task } from "~/types/types";
+
+const isTaskModalActive = ref(false);
+const clickedTaskId = ref<string | null>(null);
 
 interface Props {
   tasks: Task[] | undefined;
@@ -22,5 +29,15 @@ const emit = defineEmits(["updateTasks", "updateTaskStatus"]);
 
 function updateTaskStatus(task: Task) {
   emit("updateTasks", task);
+}
+
+function openTask(id: string) {
+  isTaskModalActive.value = true;
+  clickedTaskId.value = id;
+}
+
+function closeTaskModal() {
+  isTaskModalActive.value = false;
+  clickedTaskId.value = null;
 }
 </script>
