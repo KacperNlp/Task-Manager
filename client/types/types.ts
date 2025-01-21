@@ -14,6 +14,7 @@ interface Comment {
   taskId: number | string;
   text: string;
   date: Date;
+  author: string;
 }
 
-export type { Task, TaskStatus };
+export type { Task, TaskStatus, Comment };

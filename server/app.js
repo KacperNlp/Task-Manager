@@ -9,6 +9,7 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 8080;
 
+const comments = require("./routes/comments");
 const tasks = require("./routes/tasks");
 const users = require("./routes/users");
 
@@ -32,6 +33,7 @@ mongoose
   .catch((err) => console.error("❌ MongoDB Connection Error:", err));
 
 //routes
+app.use("/comments", comments);
 app.use("/tasks", tasks);
 app.use("/", users);
 

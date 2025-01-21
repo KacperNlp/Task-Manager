@@ -61,7 +61,7 @@
           </form>
         </div>
         <section>
-          <AppCommentsList :comments="[1, 2, 3, 4, 5]" />
+          <AppCommentsList :comments="comments" />
         </section>
       </section>
     </div>
@@ -69,26 +69,30 @@
 </template>
 
 <script lang="ts" setup>
-import type { Task } from "~/types/types";
+import type { Task, Comment } from "~/types/types";
 
 interface Props {
   taskId: string;
 }
 
 const task = ref<Task | null>(null);
+const comments = ref<Comment[] | null>(null);
 
 const props = defineProps<Props>();
 
 onMounted(async () => {
   try {
-    const res = await $fetch<Task>(
-      `http://localhost:8080/tasks/${props.taskId}`,
-      {
+    const [resTask, resComments] = await Promise.all([
+      $fetch<Task>(`http://localhost:8080/tasks/${props.taskId}`, {
         credentials: "include",
-      }
-    );
+      }),
+      $fetch<Comment[]>(`http://localhost:8080/comments/all/${props.taskId}`, {
+        credentials: "include",
+      }),
+    ]);
 
-    task.value = res;
+    task.value = resTask;
+    comments.value = resComments;
   } catch (error) {
     console.error(error);
   }
