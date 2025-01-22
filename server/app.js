@@ -10,6 +10,7 @@ const app = express();
 const port = process.env.PORT || 8080;
 
 const comments = require("./routes/comments");
+const projects = require("./routes/projects");
 const tasks = require("./routes/tasks");
 const users = require("./routes/users");
 
@@ -34,6 +35,7 @@ mongoose
 
 //routes
 app.use("/comments", comments);
+app.use("/projects", projects);
 app.use("/tasks", tasks);
 app.use("/", users);
 

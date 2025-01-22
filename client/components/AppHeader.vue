@@ -1,6 +1,10 @@
 <template>
   <header class="header w-full shadow p-4">
-    <nav class="max-w-7xl mx-auto">
+    <nav class="flex justify-between items-center max-w-7xl mx-auto">
+      <AppButton btn-type="primary" class="flex items-center gap-1">
+        <Icon name="ic:baseline-plus" class="bg-gray-50 text-xl" />
+        Dodaj projekt
+      </AppButton>
       <button
         class="block ml-auto"
         aria-label="Wyloguj się"
