@@ -19,15 +19,6 @@
         <AppButton v-show="!formIsActive" @click="changeAddTaskFormVisivility">
           + Dodaj nowe zadanie
         </AppButton>
-        <AppLayer
-          v-show="formIsActive"
-          @close-layer="changeAddTaskFormVisivility"
-        >
-          <AppAddTaskForm
-            @closeForm="changeAddTaskFormVisivility"
-            @updateTasks="updateTasks"
-          />
-        </AppLayer>
       </div>
     </section>
     <section>
@@ -46,6 +37,12 @@
         @updateTaskStatus="updateTaskStatus"
       />
     </section>
+    <AppLayer v-show="formIsActive" @close-layer="changeAddTaskFormVisivility">
+      <AppAddTaskForm
+        @closeForm="changeAddTaskFormVisivility"
+        @updateTasks="updateTasks"
+      />
+    </AppLayer>
   </main>
 </template>
 <script setup lang="ts">

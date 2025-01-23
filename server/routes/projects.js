@@ -5,11 +5,11 @@ const Project = require("../models/Project");
 
 router.post("/", async (req, res) => {
   try {
-    const commentData = { ...req.body, user: req.cookies.user_id };
-    const comment = new Comment(commentData);
-    const savedComment = await comment.save();
+    const projectData = { ...req.body, user: req.cookies.user_id };
+    const project = new Project(projectData);
+    await project.save();
 
-    res.json(savedComment);
+    res.status(200).json({ message: "Project created" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

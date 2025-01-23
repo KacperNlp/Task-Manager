@@ -78,4 +78,14 @@ router.post("/logout", (req, res) => {
   res.json({ message: "User logged out successfully" });
 });
 
+router.get("/users/all", async (req, res) => {
+  try {
+    const users = await User.find().select("email _id");
+
+    res.status(200).json(users);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 module.exports = router;

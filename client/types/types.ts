@@ -22,4 +22,10 @@ interface Comment {
   date: Date;
 }
 
-export type { Task, TaskStatus, Comment, User };
+interface Project {
+  name: string,
+  description: string
+  users: string[]
+}
+
+export type { Task, TaskStatus, Comment, User, Project };

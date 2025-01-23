@@ -12,4 +12,10 @@ export default defineNuxtConfig({
   },
 
   modules: ['@nuxt/icon'],
+
+  runtimeConfig: {
+    public: {
+      apiURL: process.env.API_URL
+    }
+  },
 })

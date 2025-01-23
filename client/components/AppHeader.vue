@@ -1,7 +1,11 @@
 <template>
   <header class="header w-full shadow p-4">
     <nav class="flex justify-between items-center max-w-7xl mx-auto">
-      <AppButton btn-type="primary" class="flex items-center gap-1">
+      <AppButton
+        @click="handleToggleAddNewProjectForm"
+        btn-type="primary"
+        class="flex items-center gap-1"
+      >
         <Icon name="ic:baseline-plus" class="bg-gray-50 text-xl" />
         Dodaj projekt
       </AppButton>
@@ -15,12 +19,17 @@
       </button>
     </nav>
   </header>
+  <AppLayer v-show="formIsActive" @close-layer="handleToggleAddNewProjectForm">
+    <AppAddProjectForm @closeForm="handleToggleAddNewProjectForm" />
+  </AppLayer>
 </template>
 
 <script lang="ts" setup>
 const { logout } = useAuth();
 
 const router = useRouter();
+
+const formIsActive = ref(false);
 
 async function logoutUser() {
   try {
@@ -29,5 +38,9 @@ async function logoutUser() {
   } catch (error) {
     console.error(error);
   }
+}
+
+function handleToggleAddNewProjectForm() {
+  formIsActive.value = !formIsActive.value;
 }
 </script>

@@ -3,14 +3,18 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const ProjectSchema = new Schema({
-  taskId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Task",
-  },
-  users: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-  },
+  tasks: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Task",
+    },
+  ],
+  users: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
   name: {
     type: String,
     required: true,
