@@ -39,9 +39,10 @@
 </template>
 
 <script setup lang="ts">
+import ProjectsManager from "../services/ProjectsManager";
+import UsersManager from "../services/UsersManager";
 import type { User, Project } from "../types/types";
 
-const runtimeConfig = useRuntimeConfig();
 const emit = defineEmits(["closeForm"]);
 
 const form = reactive<Project>({
@@ -53,13 +54,7 @@ const users = ref<User[]>([]);
 
 async function fetchAllUsers() {
   try {
-    const res = await $fetch<User[]>(
-      `${runtimeConfig.public.apiURL}users/all`,
-      {
-        method: "GET",
-        credentials: "include",
-      }
-    );
+    const res = await UsersManager.getUsers();
 
     users.value = res;
   } catch (err) {
@@ -69,12 +64,7 @@ async function fetchAllUsers() {
 
 async function createNewProject() {
   try {
-    await $fetch(`${runtimeConfig.public.apiURL}projects`, {
-      method: "POST",
-      credentials: "include",
-      body: JSON.stringify(form),
-    });
-
+    await ProjectsManager.createProject(form);
     emit("closeForm");
   } catch (err) {
     console.error(err);

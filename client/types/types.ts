@@ -28,4 +28,9 @@ interface Project {
   users: string[]
 }
 
-export type { Task, TaskStatus, Comment, User, Project };
+interface StoreState {
+  projects: Project[],
+  tasks: Task[]
+}
+
+export type { Task, TaskStatus, Comment, User, Project, StoreState };

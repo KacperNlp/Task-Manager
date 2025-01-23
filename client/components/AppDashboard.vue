@@ -1,5 +1,9 @@
 <template>
-  <main class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+  <AppProjectsList v-show="isProjectsListVisible" />
+  <main
+    v-show="!isProjectsListVisible"
+    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
+  >
     <section>
       <AppColumnHeadline>Przeterminowane</AppColumnHeadline>
       <AppTasksList
@@ -51,6 +55,7 @@ import type { Task } from "../types/types";
 const tasks = ref<Task[]>([]);
 const oldTasks = ref<Task[]>([]);
 const formIsActive = ref(false);
+const isProjectsListVisible = ref(true);
 
 const doneTasks = computed(() => {
   const todayTasksDone = tasks.value.filter((task) => task.status === "Done");
