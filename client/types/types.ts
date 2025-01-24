@@ -30,7 +30,8 @@ interface Project {
 
 interface StoreState {
   projects: Project[],
-  tasks: Task[]
+  tasks: Task[].
+  oldTasks: Task[]
 }
 
 export type { Task, TaskStatus, Comment, User, Project, StoreState };

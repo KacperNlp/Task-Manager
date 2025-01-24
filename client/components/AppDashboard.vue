@@ -7,7 +7,7 @@
     <section>
       <AppColumnHeadline>Przeterminowane</AppColumnHeadline>
       <AppTasksList
-        :tasks="notStartedTasksOld"
+        :tasks="store.getNotStartedOldTasks"
         @updateTasks="getUserTasks"
         @updateTaskStatus="updateTaskStatus"
       />
@@ -15,7 +15,7 @@
     <section>
       <AppColumnHeadline>Zadania na dziś</AppColumnHeadline>
       <AppTasksList
-        :tasks="notStartedTasksToday"
+        :tasks="store.getNotStartedTasks"
         @updateTasks="getUserTasks"
         @updateTaskStatus="updateTaskStatus"
       />
@@ -28,7 +28,7 @@
     <section>
       <AppColumnHeadline>Realizowane</AppColumnHeadline>
       <AppTasksList
-        :tasks="inProgressTasks"
+        :tasks="store.getTasksInProgress"
         @updateTasks="getUserTasks"
         @updateTaskStatus="updateTaskStatus"
       />
@@ -36,7 +36,7 @@
     <section>
       <AppColumnHeadline>Zakończone</AppColumnHeadline>
       <AppTasksList
-        :tasks="doneTasks"
+        :tasks="store.getDoneTasks"
         @updateTasks="getUserTasks"
         @updateTaskStatus="updateTaskStatus"
       />
@@ -52,46 +52,14 @@
 <script setup lang="ts">
 import type { Task } from "../types/types";
 
-const tasks = ref<Task[]>([]);
-const oldTasks = ref<Task[]>([]);
+const store = useWebsiteStore();
+
 const formIsActive = ref(false);
-const isProjectsListVisible = ref(true);
-
-const doneTasks = computed(() => {
-  const todayTasksDone = tasks.value.filter((task) => task.status === "Done");
-  const oldTasksDone = oldTasks.value.filter((task) => task.status === "Done");
-
-  return [...todayTasksDone, ...oldTasksDone];
-});
-
-const inProgressTasks = computed(() => {
-  const todayTasksInProgress = tasks.value.filter(
-    (task) => task.status === "InProgress"
-  );
-  const oldTasksInPorgress = oldTasks.value.filter(
-    (task) => task.status === "InProgress"
-  );
-
-  return [...todayTasksInProgress, ...oldTasksInPorgress];
-});
-
-const notStartedTasksToday = computed(() =>
-  tasks.value.filter((task) => task.status === "NotStarted")
-);
-
-const notStartedTasksOld = computed(() =>
-  oldTasks.value.filter((task) => task.status === "NotStarted")
-);
+const isProjectsListVisible = ref(false);
 
 async function getUserTasks() {
   try {
-    const response = await $fetch("http://localhost:8080/tasks", {
-      method: "GET",
-      credentials: "include",
-    });
-
-    tasks.value = response.todayTasks;
-    oldTasks.value = response.oldTasks;
+    await store.fetchTasks();
   } catch (error) {
     console.error(error);
   }
