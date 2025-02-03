@@ -11,7 +11,7 @@ export default defineNuxtConfig({
     },
   },
 
-  modules: ['@nuxt/icon', '@pinia/nuxt'],
+  modules: ['@nuxt/icon', '@pinia/nuxt', '@nuxt/ui'],
 
   runtimeConfig: {
     public: {

@@ -1,6 +1,6 @@
 <template>
   <section class="fixed bg-white h-screen z-10 border-r">
-    <div class="flex items-center gap-2 border-b px-5 py-6">
+    <div class="flex items-center gap-2 h-[88px] border-b px-5 py-6">
       <img src="/project-logo.svg" alt="Task Manager" />
       <h2 class="text-xl font-semibold mr-10">Project M.</h2>
       <button
@@ -40,6 +40,7 @@
           My projects
         </h3>
         <button
+          @click="handleToggleAddNewProjectForm"
           class="group flex items-center justify-center border border-gray-500 hover:border-blue-500 hover:bg-blue-500 rounded-md w-4 h-4group duration-200"
         >
           <Icon
@@ -65,9 +66,13 @@
       </ul>
     </nav>
   </section>
+  <AppLayer v-show="formIsActive" @close-layer="handleToggleAddNewProjectForm">
+    <AppAddProjectForm @closeForm="handleToggleAddNewProjectForm" />
+  </AppLayer>
 </template>
 <script setup lang="ts">
 const isSidebarActive = ref(false);
+const formIsActive = ref(false);
 
 const links = [
   {
@@ -113,5 +118,9 @@ const projects = [
 
 function toggleSidebar() {
   console.log("Toggle");
+}
+
+function handleToggleAddNewProjectForm() {
+  formIsActive.value = !formIsActive.value;
 }
 </script>
