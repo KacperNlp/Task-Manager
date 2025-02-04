@@ -2,7 +2,7 @@
   <section class="fixed bg-white h-screen z-10 border-r">
     <div class="flex items-center gap-2 h-[88px] border-b px-5 py-6">
       <img src="/project-logo.svg" alt="Task Manager" />
-      <h2 class="text-xl font-semibold mr-10">Project M.</h2>
+      <h2 class="text-xl font-semibold mr-10 text-gray-900">Project M.</h2>
       <button
         @click="toggleSidebar"
         aria-label="Change sidebar visbility"
