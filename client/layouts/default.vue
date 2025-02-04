@@ -4,3 +4,9 @@
     <slot />
   </div>
 </template>
+
+<style>
+body {
+  background-color: #fff;
+}
+</style>
