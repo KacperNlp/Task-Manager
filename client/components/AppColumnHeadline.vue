@@ -21,6 +21,7 @@
     >
       {{ count }}
     </span>
+    <slot />
   </h2>
 </template>
 

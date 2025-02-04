@@ -1,4 +1,4 @@
-type TaskStatus = "Done" | "InProgress" | "NotStarted";
+type TaskStatus = "Low" | "Medium" | "Hight";
 
 interface Task {
   _id: string;

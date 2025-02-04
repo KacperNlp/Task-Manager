@@ -15,25 +15,25 @@ const props = defineProps<Props>();
 
 const taskStatusLabel = computed(() => {
   switch (props.taskStatus) {
-    case "NotStarted":
-      return "Not started";
-    case "InProgress":
-      return "In progress";
-    case "Done":
-      return "Done";
+    case "Low":
+      return "Low";
+    case "Medium":
+      return "Medium";
+    case "Hight":
+      return "Hight";
     default:
-      return "Not started";
+      return "Low";
   }
 });
 
 const taskStatusClasses = computed(() => {
   switch (props.taskStatus) {
-    case "NotStarted":
+    case "Low":
       return "text-blue-500 bg-blue-100 px-2 py-1 rounded";
-    case "InProgress":
+    case "Medium":
       return "text-orange-500 bg-orange-100 px-2 py-1 rounded";
-    case "Done":
-      return "text-green-500 bg-green-100 px-2 py-1 rounded";
+    case "Hight":
+      return "text-rose-500 bg-rose-100 px-2 py-1 rounded";
     default:
       return "text-gray-500 bg-gray-100 px-2 py-1 rounded";
   }
