@@ -1,6 +1,6 @@
 <template>
   <li
-    class="relative py-4 px-2 lg:px-4 border rounded-md hover:shadow-md duration-200 cursor-pointer"
+    class="relative py-4 px-2 lg:px-4 rounded-md hover:shadow-md duration-200 bg-white cursor-pointer"
   >
     <div class="flex flex-col md:flex-row justify-between items-start gap-2">
       <h3 class="text-base font-semibold">{{ task.title }}</h3>

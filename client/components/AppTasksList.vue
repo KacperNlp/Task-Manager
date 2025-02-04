@@ -6,7 +6,6 @@
       :task="task"
       @updateTasks="emit('updateTasks')"
       @updateTaskStatus="updateTaskStatus"
-      @click="openTask(task._id)"
     />
   </ul>
   <AppLayer v-if="isTaskModalActive" @close-layer="closeTaskModal">

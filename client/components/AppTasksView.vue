@@ -1,13 +1,11 @@
 <template>
   <section class="grid grid-cols-3 gap-3">
     <section class="p-4 bg-gray-50 rounded-lg">
-      <AppColumnHeadline>
-        To Do
-        <span
-          class="flex items-center justify-center w-4 h-4 bg-gray-200 text-gray-600 text-xs rounded-xl"
-          >{{ store.getNotStartedTasks.length }}</span
-        >
-      </AppColumnHeadline>
+      <AppColumnHeadline
+        :count="store.getNotStartedTasks.length"
+        text="To do"
+        columnType="toDo"
+      />
       <AppTasksList
         :tasks="store.getNotStartedTasks"
         @updateTasks="getUserTasks"
@@ -15,13 +13,11 @@
       />
     </section>
     <section class="p-4 bg-gray-50 rounded-lg">
-      <AppColumnHeadline>
-        On Progress
-        <span
-          class="flex items-center justify-center w-4 h-4 bg-gray-200 text-gray-600 text-xs rounded-xl"
-          >{{ store.getTasksInProgress.length }}</span
-        >
-      </AppColumnHeadline>
+      <AppColumnHeadline
+        :count="store.getTasksInProgress.length"
+        text="On Progress"
+        columnType="progress"
+      />
       <AppTasksList
         :tasks="store.getTasksInProgress"
         @updateTasks="getUserTasks"
@@ -29,13 +25,11 @@
       />
     </section>
     <section class="p-4 bg-gray-50 rounded-lg">
-      <AppColumnHeadline>
-        Done
-        <span
-          class="flex items-center justify-center w-4 h-4 bg-gray-200 text-gray-600 text-xs rounded-xl"
-          >{{ store.getDoneTasks.length }}</span
-        >
-      </AppColumnHeadline>
+      <AppColumnHeadline
+        :count="store.getDoneTasks.length"
+        text="Done"
+        columnType="done"
+      />
       <AppTasksList
         :tasks="store.getDoneTasks"
         @updateTasks="getUserTasks"
