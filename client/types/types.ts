@@ -1,4 +1,5 @@
-type TaskStatus = "Low" | "Medium" | "Hight";
+type TaskStatus = "Done" | "InProgress" | "NotStarted";
+type TaskType = "Low" | "Medium" | "Hight";
 
 interface Task {
   _id: string;
@@ -6,7 +7,8 @@ interface Task {
   description: string;
   completed: boolean;
   date: Date,
-  status: TaskStatus
+  status: TaskStatus,
+  taskType: TaskType
 }
 
 interface User {
@@ -30,8 +32,7 @@ interface Project {
 
 interface StoreState {
   projects: Project[],
-  tasks: Task[].
-  oldTasks: Task[]
+  tasks: Task[]
 }
 
 export type { Task, TaskStatus, Comment, User, Project, StoreState };

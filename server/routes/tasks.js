@@ -5,20 +5,11 @@ const Task = require("../models/Task");
 
 router.get("/", async (req, res) => {
   try {
-    const todayStart = moment().startOf("day").toDate();
-    const todayEnd = moment().endOf("day").toDate();
-
-    const todayTasks = await Task.find({
+    const tasks = await Task.find({
       user_id: req.cookies.user_id,
-      date: { $gte: todayStart, $lte: todayEnd },
     });
 
-    const oldTasks = await Task.find({
-      user_id: req.cookies.user_id,
-      date: { $lt: todayStart },
-    });
-
-    res.json({ todayTasks, oldTasks });
+    res.json(tasks);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

@@ -6,30 +6,23 @@ export const useWebsiteStore = defineStore('websiteStore', {
     state: (): StoreState => ({
         projects: [],
         tasks: [],
-        oldTasks: []
     }),
 
     getters: {
-        getDoneTasks: ({ tasks, oldTasks }) => {
+        getDoneTasks: ({ tasks }) => {
             const tasksDone = tasks.filter((task) => task.status === "Done");
-            const oldTasksDone = oldTasks.filter((task) => task.status === "Done");
           
-            return [...tasksDone, ...oldTasksDone];
+            return tasksDone;
         },
 
-        getTasksInProgress: ({ tasks, oldTasks }) => {
+        getTasksInProgress: ({ tasks }) => {
             const tasksDone = tasks.filter((task) => task.status === "InProgress");
-            const oldTasksDone = oldTasks.filter((task) => task.status === "InProgress");
           
-            return [...tasksDone, ...oldTasksDone];
+            return tasksDone;
         },
 
         getNotStartedTasks: ({ tasks }) => {
             return tasks.filter((task) => task.status === "NotStarted")
-        },
-
-        getNotStartedOldTasks: ({ oldTasks }) => {
-            return oldTasks.filter((task) => task.status === "NotStarted")
         }
     },
 
@@ -40,10 +33,9 @@ export const useWebsiteStore = defineStore('websiteStore', {
         },
 
         async fetchTasks() {
-            const { todayTasks, oldTasks } = await TasksManager.getTasks();
+            const tasks = await TasksManager.getTasks();
 
-            this.tasks = todayTasks;
-            this.oldTasks = oldTasks;
+            this.tasks = tasks;
         }
     }
 })

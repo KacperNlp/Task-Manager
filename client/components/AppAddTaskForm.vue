@@ -25,6 +25,7 @@
           type="date"
         />
       </label>
+      <USelect v-model="form.taskType" :options="TASKS_IMPORTANCE" />
 
       <div class="flex flex-row justify-end gap-2 mt-8">
         <AppButton @click="addTask" class="text-sm">Dodaj zadanie</AppButton>
@@ -37,10 +38,13 @@
 </template>
 
 <script setup lang="ts">
+const TASKS_IMPORTANCE = ["Low", "Medium", "Hight"];
+
 const form = reactive({
   title: "",
   description: "",
   date: new Date().toISOString().slice(0, 10),
+  taskType: "Low",
 });
 
 const emit = defineEmits(["closeForm"]);

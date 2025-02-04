@@ -5,15 +5,16 @@
 </template>
 
 <script setup lang="ts">
-import type { TaskStatus } from "../types/types";
+import type { taskType } from "../types/types";
 
 interface Props {
-  taskStatus: TaskStatus;
+  taskStatus: taskType;
 }
 
 const props = defineProps<Props>();
 
 const taskStatusLabel = computed(() => {
+  console.log(props.taskStatus);
   switch (props.taskStatus) {
     case "Low":
       return "Low";

@@ -3,7 +3,7 @@
     class="relative py-4 px-2 lg:px-4 rounded-md hover:shadow-md duration-200 bg-white cursor-pointer"
   >
     <article>
-      <AppTaskStatus :task-status="task.status" />
+      <AppTaskStatus :task-status="task.taskType" />
       <h3 class="text-base font-semibold text-gray-900 mt-3">
         {{ task.title }}
       </h3>

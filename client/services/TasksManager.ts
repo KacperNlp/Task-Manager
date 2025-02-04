@@ -4,11 +4,11 @@ export default abstract class TasksManager {
     static async getTasks() {
         const config = useRuntimeConfig();
 
-        const { todayTasks, oldTasks } = await $fetch<{ todayTasks: Task[], oldTasks: Task[] }>(`${config.public.apiURL}/tasks`, {
+        const tasks = await $fetch<Task[]>(`${config.public.apiURL}/tasks`, {
             method: "GET",
             credentials: "include",
           });
 
-        return { todayTasks, oldTasks };
+        return tasks;
     }
 }
