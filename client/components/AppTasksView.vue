@@ -81,6 +81,4 @@ function updateTasks() {
 function updateTaskStatus(task: Task) {
   console.log("Hello there!");
 }
-
-await getUserTasks();
 </script>

@@ -7,8 +7,8 @@
     >
       <div class="flex gap-3 items-center">
         <div class="flex flex-col items-end text-sm">
-          <strong class="text-gray-900">Anima Agrawal</strong>
-          <span class="text-gray-500 text-xs">Frontend Developer</span>
+          <strong class="text-gray-900">{{ loggedUserNameAndSurname }}</strong>
+          <span class="text-gray-500 text-xs">{{ loggedUserRole }}</span>
         </div>
         <UAvatar src="https://avatars.githubusercontent.com/u/739984?v=4" />
       </div>
@@ -38,6 +38,13 @@
 const { logout } = useAuth();
 
 const router = useRouter();
+const store = useWebsiteStore();
+
+const loggedUserNameAndSurname = computed(
+  () => `${store.loggedUser?.name} ${store.loggedUser?.surname}`
+);
+
+const loggedUserRole = computed(() => store.loggedUser?.role);
 
 const items = [
   [

@@ -7,10 +7,16 @@ const User = require("../models/User");
 
 router.post("/register", async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, name, surname, password, role } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const user = new User({ email, password: hashedPassword });
+    const user = new User({
+      email,
+      name,
+      surname,
+      password: hashedPassword,
+      role,
+    });
     user.save();
 
     const token = jwt.sign(
@@ -83,6 +89,16 @@ router.get("/users/all", async (req, res) => {
     const users = await User.find().select("email _id");
 
     res.status(200).json(users);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+router.get("/users/logged", async (req, res) => {
+  try {
+    const loggedUser = await User.findById(req.cookies.user_id);
+
+    res.status(200).json(loggedUser);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

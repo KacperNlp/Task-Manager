@@ -1,11 +1,13 @@
 import ProjectsManager from '~/services/ProjectsManager'
 import TasksManager from '~/services/TasksManager'
+import UsersManager from '~/services/UsersManager'
 import type { StoreState } from '../types/types'
 
 export const useWebsiteStore = defineStore('websiteStore', {
     state: (): StoreState => ({
         projects: [],
         tasks: [],
+        loggedUser: null
     }),
 
     getters: {
@@ -34,8 +36,12 @@ export const useWebsiteStore = defineStore('websiteStore', {
 
         async fetchTasks() {
             const tasks = await TasksManager.getTasks();
-
             this.tasks = tasks;
+        },
+
+        async fetchLoggedUserData() {
+            const res = await UsersManager.getLoggedUser();
+            this.loggedUser = res;
         }
     }
 })

@@ -1,5 +1,14 @@
 type TaskStatus = "Done" | "InProgress" | "NotStarted";
 type TaskType = "Low" | "Medium" | "Hight";
+type Roles = "Project Manager" | "Backend Developer" | "Frontend Developer" | "Tester" | "Designer"
+
+enum UserRoles {
+  PM = 'Project Manager',
+  BE = 'Backend Developer',
+  FE = 'Frontend Developer',
+  Tester = 'Tester',
+  Designer = 'Designer',
+}
 
 interface Task {
   _id: string;
@@ -14,6 +23,18 @@ interface Task {
 interface User {
   _id: string,
   email: string,
+  name: string,
+  surname: string,
+  role: UserRoles
+}
+
+interface RegisterUser {
+  name: string,
+  surname: string,
+  email: string,
+  password: string,
+  repeatPassword: string,
+  role: UserRoles
 }
 
 interface Comment {
@@ -32,7 +53,9 @@ interface Project {
 
 interface StoreState {
   projects: Project[],
-  tasks: Task[]
+  tasks: Task[],
+  loggedUser: User | null
 }
 
-export type { Task, TaskStatus, Comment, User, Project, StoreState };
+export { UserRoles }
+export type { Task, TaskStatus, Comment, User, RegisterUser, Project, StoreState, Roles };

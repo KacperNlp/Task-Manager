@@ -11,4 +11,15 @@ export default abstract class UserManager {
 
         return res;
     }
+
+    static async getLoggedUser() {
+        const config = useRuntimeConfig();
+
+        const res = await $fetch<User>(`${config.public.apiURL}/users/logged`, {
+            method: "GET",
+            credentials: "include",
+        });
+
+        return res;
+    }
 }

@@ -1,10 +1,28 @@
 <template>
-  <div class="flex justify-center items-center h-screen">
+  <div class="flex justify-center items-center h-screen bg-slate-900">
     <AppCard class="w-80 md:w-96 shadow-md">
       <h1 class="text-2xl font-semibold text-center mb-2">
         {{ loginCardTitle }}
       </h1>
       <form action="POST">
+        <AppInput
+          v-if="!userHasAccount"
+          v-model="form.name"
+          :is-required="true"
+          type="text"
+          inputId="name"
+          name="name"
+          label="Name"
+        />
+        <AppInput
+          v-if="!userHasAccount"
+          v-model="form.surname"
+          :is-required="true"
+          type="text"
+          inputId="surname"
+          name="surname"
+          label="Surname"
+        />
         <AppInput
           v-model="form.email"
           :is-required="true"
@@ -30,6 +48,11 @@
           name="repeatPassword"
           label="Repeat password"
         />
+        <USelect
+          v-if="!userHasAccount"
+          v-model="form.role"
+          :options="roleOptions"
+        />
         <div class="flex flex-col gap-2 justify-between mt-4">
           <AppButton @click="submitForm" btn-type="primary" type="submit">{{
             loginCardTitle
@@ -47,15 +70,24 @@
   </div>
 </template>
 <script setup lang="ts">
+import { UserRoles } from "~/types/types";
+
+definePageMeta({
+  layout: "login",
+});
+
 const { login, register } = useAuth();
 
 const router = useRouter();
 
 const userHasAccount = ref(true);
 const form = reactive({
+  name: "",
+  surname: "",
   email: "",
   password: "",
   repeatPassword: "",
+  role: UserRoles.PM,
 });
 
 const loginCardTitle = computed(() => {
@@ -68,12 +100,16 @@ const btnText = computed(() => {
     : "Login with existing account";
 });
 
+const roleOptions = computed(() => Object.values(UserRoles));
+
 function changeUserHasAccount() {
   userHasAccount.value = !userHasAccount.value;
 
   form.email = "";
   form.password = "";
   form.repeatPassword = "";
+  form.name = "";
+  form.surname = "";
 }
 
 async function submitForm(e: Event) {
@@ -89,7 +125,7 @@ async function submitForm(e: Event) {
         return;
       }
 
-      isSuccesfullyVerified = await register(form.email, form.password);
+      isSuccesfullyVerified = await register(form);
     }
 
     if (isSuccesfullyVerified) {

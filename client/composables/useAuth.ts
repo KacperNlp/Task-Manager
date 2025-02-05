@@ -1,3 +1,5 @@
+import type { RegisterUser } from '../types/types'
+
 export function useAuth() {
     const login = async (email: string, password: string) => {
         try {
@@ -16,7 +18,7 @@ export function useAuth() {
         }
     }
 
-    const register = async (email: string, password: string) => {
+    const register = async (userData: RegisterUser) => {
         try {
             const res = await $fetch<{ success?: boolean }>('http://localhost:8080/register', {
                 method: 'POST',
@@ -24,7 +26,7 @@ export function useAuth() {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ email, password })
+                body: JSON.stringify(userData)
             });
 
             return res?.success;
