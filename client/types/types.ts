@@ -48,6 +48,7 @@ interface Comment {
 interface Project {
   name: string,
   description: string
+  color: string
   users: string[]
 }
 

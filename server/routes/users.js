@@ -86,7 +86,7 @@ router.post("/logout", (req, res) => {
 
 router.get("/users/all", async (req, res) => {
   try {
-    const users = await User.find().select("email _id");
+    const users = await User.find().select("name surname role _id");
 
     res.status(200).json(users);
   } catch (err) {

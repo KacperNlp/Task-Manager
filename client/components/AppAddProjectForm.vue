@@ -17,13 +17,31 @@
           type="text"
         />
       </label>
+      <label class="flex flex-col gap-2 mb-3">
+        <span class="text-sm text-gray-600">Opis</span>
+        <input
+          v-model="form.color"
+          class="text-sm p-2 md:p-4 border rounded-md"
+          type="color"
+          value="#fff"
+        />
+      </label>
       <label>
-        <span class="text-sm text-gray-600">Tytuł</span>
-        <select name="user" id="" v-model="form.users" multiple>
-          <option v-for="user in users" :key="user._id" :value="user._id">
-            {{ user.email }}
-          </option>
-        </select>
+        <span class="text-sm text-gray-600">Przypisani użytkownicy</span>
+        <USelectMenu
+          v-model="form.users"
+          :options="users"
+          placeholder="Select people"
+          value-attribute="_id"
+          option-attribute="name"
+          multiple
+        >
+          <template #option="{ option: person }">
+            <span class="text-xs">
+              {{ person.name }} {{ person.surname }} - {{ person.role }}
+            </span>
+          </template>
+        </USelectMenu>
       </label>
 
       <div class="flex flex-row justify-end gap-2 mt-8">
@@ -48,6 +66,7 @@ const emit = defineEmits(["closeForm"]);
 const form = reactive<Project>({
   name: "",
   description: "",
+  color: "",
   users: [],
 });
 const users = ref<User[]>([]);
@@ -57,6 +76,7 @@ async function fetchAllUsers() {
     const res = await UsersManager.getUsers();
 
     users.value = res;
+    console.log(users.value);
   } catch (err) {
     console.error(err);
   }
