@@ -1,4 +1,4 @@
-import type { Project } from "../types/types";
+import type { Project, NewProject } from "../types/types";
 
 export default abstract class ProjectsManager {
     static async getProjects() {
@@ -12,7 +12,7 @@ export default abstract class ProjectsManager {
         return res;
     }
 
-    static async createProject(data: Project) {
+    static async createProject(data: NewProject) {
         const config = useRuntimeConfig();
         const store = useWebsiteStore();
 

@@ -50,18 +50,23 @@
         </button>
       </div>
       <ul class="flex flex-col gap-2">
-        <li
-          v-for="project in store.projects"
-          class="group flex items-center gap-2 p-2 rounded-md hover:bg-indigo-100 cursor-pointer duration-200"
-        >
-          <span
-            class="block w-2 h-2 rounded-full"
-            :class="project.color"
-          ></span>
-          <span
-            class="text-gray-500 group-hover:text-gray-900 group-hover:font-semibold duration-200"
-            >{{ project.name }}</span
+        <li v-for="project in store.projects">
+          <NuxtLink
+            @click="handleClickChangeProject(project._id)"
+            :to="`/?project=${project._id}`"
+            class="group flex items-center gap-2 p-2 rounded-md text-gray-500 hover:text-gray-900 hover:bg-indigo-100 cursor-pointer hover:font-semibold duration-200"
+            :class="{
+              'bg-indigo-100 font-semibold text-gray-900': isSelectedProject(
+                project._id
+              ),
+            }"
           >
+            <span
+              class="block w-2 h-2 rounded-full"
+              :style="`background-color: ${project.color}`"
+            ></span>
+            <span>{{ project.name }}</span>
+          </NuxtLink>
         </li>
       </ul>
     </nav>
@@ -98,11 +103,19 @@ const links = [
   },
 ];
 
+function isSelectedProject(projectId: string) {
+  return projectId === store.currentProjectId;
+}
+
 function toggleSidebar() {
   console.log("Toggle");
 }
 
 function handleToggleAddNewProjectForm() {
   formIsActive.value = !formIsActive.value;
+}
+
+function handleClickChangeProject(projectId: string) {
+  store.changeCurrentProject(projectId);
 }
 </script>

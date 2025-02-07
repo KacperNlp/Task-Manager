@@ -31,6 +31,10 @@ const ProjectSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+  color: {
+    type: String,
+    default: "#f00",
+  },
 });
 
 module.exports = ProjectSchema;

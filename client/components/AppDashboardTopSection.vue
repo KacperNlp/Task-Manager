@@ -1,6 +1,8 @@
 <template>
   <div class="flex items-center gap-8">
-    <h1 class="text-gray-900 text-5xl font-bold">Mobile App</h1>
+    <h1 class="text-gray-900 text-5xl font-bold">
+      {{ store.getuCurrentProject?.name }}
+    </h1>
     <div class="flex gap-4">
       <button
         @click="editProject"
@@ -24,6 +26,8 @@
 </template>
 
 <script setup lang="ts">
+const store = useWebsiteStore();
+
 function editProject() {
   console.log("Edit project!!");
 }

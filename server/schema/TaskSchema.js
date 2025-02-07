@@ -7,6 +7,7 @@ const TaskSchema = new Schema({
   description: String,
   date: Date,
   user_id: String,
+  projectId: String,
   status: {
     type: String,
     enum: ["Done", "InProgress", "NotStarted"],

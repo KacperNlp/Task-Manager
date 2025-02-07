@@ -20,6 +20,14 @@ interface Task {
   taskType: TaskType
 }
 
+interface NewTask {
+  title: string,
+  description: string,
+  date: string,
+  taskType: TaskType,
+  projectId: string | null,
+}
+
 interface User {
   _id: string,
   email: string,
@@ -46,6 +54,14 @@ interface Comment {
 }
 
 interface Project {
+  _id: string,
+  name: string,
+  description: string
+  color: string
+  users: string[]
+}
+
+interface NewProject {
   name: string,
   description: string
   color: string
@@ -55,8 +71,9 @@ interface Project {
 interface StoreState {
   projects: Project[],
   tasks: Task[],
-  loggedUser: User | null
+  loggedUser: User | null,
+  currentProjectId: string | null
 }
 
 export { UserRoles }
-export type { Task, TaskStatus, Comment, User, RegisterUser, Project, StoreState, Roles };
+export type { Task, NewTask, TaskStatus, Comment, User, RegisterUser, Project, NewProject, StoreState, Roles };

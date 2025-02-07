@@ -7,7 +7,8 @@ export const useWebsiteStore = defineStore('websiteStore', {
     state: (): StoreState => ({
         projects: [],
         tasks: [],
-        loggedUser: null
+        loggedUser: null,
+        currentProjectId: null
     }),
 
     getters: {
@@ -25,6 +26,10 @@ export const useWebsiteStore = defineStore('websiteStore', {
 
         getNotStartedTasks: ({ tasks }) => {
             return tasks.filter((task) => task.status === "NotStarted")
+        },
+
+        getuCurrentProject: ({ projects, currentProjectId }) => {
+            return projects.find(project => project._id === currentProjectId);
         }
     },
 
@@ -36,13 +41,28 @@ export const useWebsiteStore = defineStore('websiteStore', {
         },
 
         async fetchTasks() {
-            const tasks = await TasksManager.getTasks();
+            if(!this.currentProjectId) return;
+
+            const tasks = await TasksManager.getTasks(this.currentProjectId);
             this.tasks = tasks;
         },
 
         async fetchLoggedUserData() {
             const res = await UsersManager.getLoggedUser();
             this.loggedUser = res;
+        },
+
+        async changeCurrentProject(projetId: string) {
+            if(projetId === this.currentProjectId) return;
+
+            this.currentProjectId = projetId
+            await this.fetchTasks();
+        },
+
+        setProject(projectId: string | undefined | null) {
+            if(projectId) this.currentProjectId = projectId;
+
+            this.currentProjectId = this.projects[0]._id;
         }
     }
 })

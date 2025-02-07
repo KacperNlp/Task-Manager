@@ -7,6 +7,7 @@ router.get("/", async (req, res) => {
   try {
     const tasks = await Task.find({
       user_id: req.cookies.user_id,
+      projectId: req.query.projectId,
     });
 
     res.json(tasks);

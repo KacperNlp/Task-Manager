@@ -38,31 +38,30 @@
 </template>
 
 <script setup lang="ts">
+import TasksManager from "~/services/TasksManager";
+import type { NewTask } from "@/types/types";
+
 const TASKS_IMPORTANCE = ["Low", "Medium", "Hight"];
 
-const form = reactive({
+const store = useWebsiteStore();
+
+const form = reactive<NewTask>({
   title: "",
   description: "",
   date: new Date().toISOString().slice(0, 10),
   taskType: "Low",
+  projectId: store.currentProjectId,
 });
 
-const emit = defineEmits(["closeForm"]);
+const emit = defineEmits(["closeForm", "updateTasks"]);
 
 const minDate = computed(() => new Date().toISOString().slice(0, 10));
 
 async function addTask() {
   try {
     const formData = { ...form };
-    console.log(formData);
-    await $fetch("http://localhost:8080/tasks/add", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-      credentials: "include",
-    });
+
+    await TasksManager.createNewTask(formData);
 
     emit("updateTasks");
 
