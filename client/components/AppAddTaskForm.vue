@@ -50,7 +50,7 @@ const form = reactive<NewTask>({
   description: "",
   date: new Date().toISOString().slice(0, 10),
   taskType: "Low",
-  projectId: store.currentProjectId,
+  projectId: "",
 });
 
 const emit = defineEmits(["closeForm", "updateTasks"]);
@@ -60,6 +60,7 @@ const minDate = computed(() => new Date().toISOString().slice(0, 10));
 async function addTask() {
   try {
     const formData = { ...form };
+    form.projectId = store.currentProjectId;
 
     await TasksManager.createNewTask(formData);
 
