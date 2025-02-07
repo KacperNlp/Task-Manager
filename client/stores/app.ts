@@ -31,6 +31,7 @@ export const useWebsiteStore = defineStore('websiteStore', {
     actions: {
         async fetchProjectsList() {
             const res = await ProjectsManager.getProjects();
+            console.log(res);
             this.projects = res;
         },
 

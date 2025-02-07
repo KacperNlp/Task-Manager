@@ -51,7 +51,7 @@
       </div>
       <ul class="flex flex-col gap-2">
         <li
-          v-for="project in projects"
+          v-for="project in store.projects"
           class="group flex items-center gap-2 p-2 rounded-md hover:bg-indigo-100 cursor-pointer duration-200"
         >
           <span
@@ -66,11 +66,12 @@
       </ul>
     </nav>
   </section>
-  <AppLayer v-show="formIsActive" @close-layer="handleToggleAddNewProjectForm">
+  <AppLayer v-if="formIsActive" @close-layer="handleToggleAddNewProjectForm">
     <AppAddProjectForm @closeForm="handleToggleAddNewProjectForm" />
   </AppLayer>
 </template>
 <script setup lang="ts">
+const store = useWebsiteStore();
 const isSidebarActive = ref(false);
 const formIsActive = ref(false);
 
@@ -94,25 +95,6 @@ const links = [
   {
     text: "Settings",
     icon: "lsicon:setting-outline",
-  },
-];
-
-const projects = [
-  {
-    name: "Mobile App",
-    color: "bg-green-500",
-  },
-  {
-    name: "Website Redesign",
-    color: "bg-orange-500",
-  },
-  {
-    name: "Design System",
-    color: "bg-purple-500",
-  },
-  {
-    name: "Wireframes",
-    color: "bg-rose-500",
   },
 ];
 

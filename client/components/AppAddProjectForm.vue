@@ -21,9 +21,8 @@
         <span class="text-sm text-gray-600">Opis</span>
         <input
           v-model="form.color"
-          class="text-sm p-2 md:p-4 border rounded-md"
+          class="text-sm border rounded-md"
           type="color"
-          value="#fff"
         />
       </label>
       <label>
@@ -66,7 +65,7 @@ const emit = defineEmits(["closeForm"]);
 const form = reactive<Project>({
   name: "",
   description: "",
-  color: "",
+  color: "#fff",
   users: [],
 });
 const users = ref<User[]>([]);
@@ -76,7 +75,6 @@ async function fetchAllUsers() {
     const res = await UsersManager.getUsers();
 
     users.value = res;
-    console.log(users.value);
   } catch (err) {
     console.error(err);
   }
@@ -91,5 +89,7 @@ async function createNewProject() {
   }
 }
 
-await fetchAllUsers();
+onMounted(async () => {
+  await fetchAllUsers();
+});
 </script>

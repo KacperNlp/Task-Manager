@@ -14,7 +14,6 @@ interface Props {
 const props = defineProps<Props>();
 
 const taskStatusLabel = computed(() => {
-  console.log(props.taskStatus);
   switch (props.taskStatus) {
     case "Low":
       return "Low";

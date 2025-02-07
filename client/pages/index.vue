@@ -12,7 +12,11 @@ const store = useWebsiteStore();
 
 async function fetchAllRequiredData() {
   try {
-    Promise.all([await store.fetchTasks(), await store.fetchLoggedUserData()]);
+    await Promise.all([
+      store.fetchTasks(),
+      store.fetchLoggedUserData(),
+      store.fetchProjectsList(),
+    ]);
   } catch (error) {
     console.error(error);
   }
