@@ -6,26 +6,26 @@ Task Manager is a project management application designed to help users efficien
 <br>
 
 <h2>🛠 Tech Stack</h2>
-Frontend:
-⚡ Vue 3 – Reactive and efficient UI framework
-🚀 Nuxt 3 – SSR and optimized frontend performance
-📦 Pinia – State management for handling application logic
-🎨 TailwindCSS – Utility-first CSS framework for styling
-Backend:
-🟢 Node.js – Server-side JavaScript runtime
-🚏 Express.js – Lightweight web framework for building APIs
-🛢 MongoDB – NoSQL database for storing users, projects, and tasks
+Frontend:<br>
+⚡ Vue 3 – Reactive and efficient UI framework <br>
+🚀 Nuxt 3 – SSR and optimized frontend performance<br>
+📦 Pinia – State management for handling application logic<br>
+🎨 TailwindCSS – Utility-first CSS framework for styling<br>
+Backend:<br>
+🟢 Node.js – Server-side JavaScript runtime<br>
+🚏 Express.js – Lightweight web framework for building APIs<br>
+🛢 MongoDB – NoSQL database for storing users, projects, and tasks<br>
 
 <br>
 <hr>
 <br>
 
 <h2>🔧 Features</h2>
-User Authentication: Register and log in securely
-Project Management: Create projects and invite other users
-Task Management:
-Assign tasks to projects
-Set priorities (e.g., High, Medium, Low)
-Mark tasks as completed
-Team Collaboration: Assign users to projects for better task distribution
-Modern UI & State Management: Responsive, fast, and scalable
+User Authentication: Register and log in securely<br>
+Project Management: Create projects and invite other users<br>
+Task Management:<br>
+Assign tasks to projects<br>
+Set priorities (e.g., High, Medium, Low)<br>
+Mark tasks as completed<br>
+Team Collaboration: Assign users to projects for better task distribution<br>
+Modern UI & State Management: Responsive, fast, and scalable<br>
