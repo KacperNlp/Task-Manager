@@ -71,9 +71,9 @@
       </ul>
     </nav>
   </section>
-  <AppLayer v-if="formIsActive" @close-layer="handleToggleAddNewProjectForm">
+  <UModal v-model="formIsActive">
     <AppAddProjectForm @closeForm="handleToggleAddNewProjectForm" />
-  </AppLayer>
+  </UModal>
 </template>
 <script setup lang="ts">
 const store = useWebsiteStore();

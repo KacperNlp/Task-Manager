@@ -46,12 +46,12 @@
         @updateTaskStatus="updateTaskStatus"
       />
     </section>
-    <AppLayer v-show="formIsActive" @close-layer="changeAddTaskFormVisivility">
+    <UModal v-model="formIsActive">
       <AppAddTaskForm
         @closeForm="changeAddTaskFormVisivility"
         @updateTasks="updateTasks"
       />
-    </AppLayer>
+    </UModal>
   </section>
 </template>
 <script setup lang="ts">
