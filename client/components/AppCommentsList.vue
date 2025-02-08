@@ -1,11 +1,11 @@
 <template>
-  <ul v-if="isAnyComment" class="flex flex-col gap-2">
+  <ul v-if="isAnyComment" class="flex flex-col gap-4 h-full">
     <li v-for="comment in comments" :key="comment._id">
       <AppComment :comment="comment" />
     </li>
   </ul>
   <div v-else class="flex justify-center items-center h-32">
-    <span class="text-sm text-gray-600">Brak komentarzy...</span>
+    <span class="text-sm text-gray-400">Brak komentarzy...</span>
   </div>
 </template>
 <script lang="ts" setup>

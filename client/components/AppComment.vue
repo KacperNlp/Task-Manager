@@ -1,16 +1,23 @@
 <template>
-  <div class="flex flex-row gap-4 lg:gap-8 p-4 md:p-6 bg-slate-50 shadow-md">
-    <div class="min-w-8 h-8 border rounder-full"></div>
-    <div class="w-full">
-      <div class="flex justify-between mb-2">
-        <strong class="block text-sm">{{ comment.user.email }}</strong>
-        <span class="text-sm font-bold text-gray-600">{{ dateOfComment }}</span>
+  <UCard>
+    <div class="flex gap-6 flex-row">
+      <UAvatar
+        src="https://avatars.githubusercontent.com/u/739984?v=4"
+        alt="Avatar"
+      />
+      <div class="w-full">
+        <div class="flex justify-between mb-3">
+          <strong class="block text-sm">{{ comment.user.email }}</strong>
+          <span class="text-sm font-bold text-gray-400">{{
+            dateOfComment
+          }}</span>
+        </div>
+        <p class="text-sm font-light leading-6">
+          {{ comment.text }}
+        </p>
       </div>
-      <p class="text-sm font-light leading-6">
-        {{ comment.text }}
-      </p>
     </div>
-  </div>
+  </UCard>
 </template>
 
 <script setup lang="ts">

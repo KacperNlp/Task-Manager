@@ -23,27 +23,30 @@
           <section>
             <h3 class="text-2xl font-bold mb-6">{{ task?.title }}</h3>
             <strong class="block mb-4">Opis</strong>
-            <div class="p-2 md:p-4 border border-gray-300 rounded-md">
+            <UCard>
               <p>{{ task?.description }}</p>
-            </div>
+            </UCard>
           </section>
           <div class="mt-6 mb-4">
-            <form action="POST" class="flex flex-col gap-2">
-              <label for="comment" class="text-xs text-gray-700"
-                >Dodaj komentarz:</label
-              >
-              <textarea
-                v-model="newComment"
-                name="comment"
-                id="comment"
-                class="w-full p-4 bg-gray-100"
-              ></textarea>
-              <AppButton @click="addCommnet" class="text-sm w-max"
-                >Dodaj komentarz</AppButton
-              >
-            </form>
+            <UForm
+              :state="newComment"
+              class="space-y-4 w-full max-w-[650px] md:min-w-96"
+              action="POST"
+              @submit="addCommnet"
+            >
+              <UFormGroup label="Add comment" name="comment">
+                <UTextarea
+                  v-model="newComment.value"
+                  :required="true"
+                  type="text"
+                />
+              </UFormGroup>
+              <UButton type="submit">Add</UButton>
+            </UForm>
           </div>
-          <section>
+          <section
+            class="mt-8 p-2 pt-4 border-t border-t-zinc-600 h-[300px] overflow-y-scroll"
+          >
             <AppCommentsList :comments="comments" />
           </section>
         </section>
@@ -53,7 +56,6 @@
 </template>
 
 <script lang="ts" setup>
-import { data } from "autoprefixer";
 import type { Task, Comment } from "~/types/types";
 
 interface Props {
@@ -62,7 +64,10 @@ interface Props {
 
 defineEmits(["closeMoadal"]);
 
-const newComment = ref<string>("");
+const newComment = reactive({
+  value: "",
+});
+
 const task = ref<Task | null>(null);
 const comments = ref<Comment[] | null>(null);
 
