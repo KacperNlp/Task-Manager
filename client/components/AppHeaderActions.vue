@@ -3,7 +3,7 @@
     <li v-for="(actionBtn, id) in actionsButtons" @key="id">
       <Icon
         :name="actionBtn.icon"
-        class="bg-gray-500 text-2xl hover:bg-blue-500 cursor-pointer"
+        class="bg-gray-400 text-2xl hover:bg-emerald-500 cursor-pointer"
       />
     </li>
   </ul>

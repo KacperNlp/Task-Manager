@@ -1,8 +1,8 @@
 <template>
-  <section class="fixed bg-white h-screen z-10 border-r">
+  <section class="fixed bg-zinc-900 h-screen z-10 border-r z-1">
     <div class="flex items-center gap-2 h-[88px] border-b px-5 py-6">
       <img src="/project-logo.svg" alt="Task Manager" />
-      <h2 class="text-xl font-semibold mr-10 text-gray-900">Project M.</h2>
+      <h2 class="text-xl font-semibold mr-10">Project M.</h2>
       <button
         @click="toggleSidebar"
         aria-label="Change sidebar visbility"
@@ -11,12 +11,12 @@
         <Icon
           v-show="isSidebarActive"
           name="mingcute:arrows-right-line"
-          class="bg-gray-500 text-2xl"
+          class="bg-gray-400 text-2xl"
         />
         <Icon
           v-show="!isSidebarActive"
           name="mingcute:arrows-left-line"
-          class="bg-gray-500 text-2xl"
+          class="bg-gray-400 text-2xl"
         />
       </button>
     </div>
@@ -25,27 +25,27 @@
         <li v-for="link in links">
           <a
             href="#"
-            class="group flex items-center gap-4 text-gray-500 hover:text-blue-500"
+            class="group flex items-center gap-4 hover:text-emerald-500"
           >
             <Icon
               :name="link.icon"
-              class="bg-gray-500 text-2xl group-hover:bg-blue-500"
+              class="bg-gray-400 text-2xl group-hover:bg-emerald-500"
             />
             <span>{{ link.text }}</span>
           </a>
         </li>
       </ul>
       <div class="flex justify-between mt-6 mb-5">
-        <h3 class="text-gray-500 font-semibold uppercase text-xs pl-2">
+        <h3 class="text-gray-400 font-semibold uppercase text-xs pl-2">
           My projects
         </h3>
         <button
           @click="handleToggleAddNewProjectForm"
-          class="group flex items-center justify-center border border-gray-500 hover:border-blue-500 hover:bg-blue-500 rounded-md w-4 h-4group duration-200"
+          class="group flex items-center justify-center border border-gray-400 hover:border-emerald-500 hover:bg-emerald-500 rounded-md w-4 h-4group duration-200"
         >
           <Icon
             name="cuida:plus-outline"
-            class="bg-gray-500 text-xs group-hover:bg-white"
+            class="bg-gray-400 text-xs group-hover:bg-white"
           />
         </button>
       </div>
@@ -54,9 +54,9 @@
           <NuxtLink
             @click="handleClickChangeProject(project._id)"
             :to="`/?project=${project._id}`"
-            class="group flex items-center gap-2 p-2 rounded-md text-gray-500 hover:text-gray-900 hover:bg-indigo-100 cursor-pointer hover:font-semibold duration-200"
+            class="group flex items-center gap-2 p-2 rounded-md text-gray-400 hover:text-gray-100 hover:bg-zinc-950 cursor-pointer hover:font-semibold duration-200"
             :class="{
-              'bg-indigo-100 font-semibold text-gray-900': isSelectedProject(
+              'bg-zinc-950 font-semibold text-gray-100': isSelectedProject(
                 project._id
               ),
             }"

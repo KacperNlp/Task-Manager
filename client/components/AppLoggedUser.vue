@@ -7,8 +7,8 @@
     >
       <div class="flex gap-3 items-center">
         <div class="flex flex-col items-end text-sm">
-          <strong class="text-gray-900">{{ loggedUserNameAndSurname }}</strong>
-          <span class="text-gray-500 text-xs">{{ loggedUserRole }}</span>
+          <strong>{{ loggedUserNameAndSurname }}</strong>
+          <span class="text-gray-400 text-xs">{{ loggedUserRole }}</span>
         </div>
         <UAvatar src="https://avatars.githubusercontent.com/u/739984?v=4" />
       </div>
