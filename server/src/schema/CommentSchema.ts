@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const { Schema } = mongoose;
 
@@ -9,4 +9,4 @@ const CommentSchema = new Schema({
   text: String,
 });
 
-module.exports = CommentSchema;
+export default CommentSchema;

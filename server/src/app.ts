@@ -1,18 +1,23 @@
-const express = require("express");
-const cors = require("cors");
-const dotenv = require("dotenv");
-const cookieParser = require("cookie-parser");
-const mongoose = require("mongoose");
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
+import mongoose from "mongoose";
 
 dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 8080;
 
-const comments = require("./routes/comments");
-const projects = require("./routes/projects");
-const tasks = require("./routes/tasks");
-const users = require("./routes/users");
+// const comments = require("./routes/comments");
+// const projects = require("./routes/projects");
+// const tasks = require("./routes/tasks");
+// const users = require("./routes/users");
+
+import comments from "./routes/comments";
+import projects from "./routes/projects";
+import tasks from "./routes/tasks";
+import users from "./routes/users";
 
 app.use(express.json());
 app.use(
@@ -31,7 +36,7 @@ mongoose
     useUnifiedTopology: true,
   })
   .then(() => console.log("✅ Connected to MongoDB"))
-  .catch((err) => console.error("❌ MongoDB Connection Error:", err));
+  .catch((err: Error) => console.error("❌ MongoDB Connection Error:", err));
 
 //routes
 app.use("/comments", comments);
