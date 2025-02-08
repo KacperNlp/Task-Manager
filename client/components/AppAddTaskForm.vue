@@ -19,7 +19,7 @@
           type="date"
         />
       </UFormGroup>
-      <UFormGroup label="Task pririty" name="priority">
+      <UFormGroup label="Task priority" name="priority">
         <USelect v-model="form.taskType" :options="TASKS_IMPORTANCE" />
       </UFormGroup>
 
@@ -53,8 +53,8 @@ const minDate = computed(() => new Date().toISOString().slice(0, 10));
 
 async function addTask() {
   try {
-    const formData = { ...form };
     form.projectId = store.currentProjectId;
+    const formData = { ...form };
 
     await TasksManager.createNewTask(formData);
 

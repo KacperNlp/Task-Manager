@@ -8,7 +8,8 @@
       variant="solid"
       aria-label="Invite another user"
       @click="inviteUser"
-    />
+      >Invite</UButton
+    >
 
     <UAvatarGroup size="sm" :max="2">
       <UAvatar

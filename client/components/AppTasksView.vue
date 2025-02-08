@@ -6,15 +6,16 @@
         text="To do"
         columnType="toDo"
       >
-        <button
+        <UButton
+          icon="cuida:plus-outline"
+          size="xs"
+          color="primary"
+          square
+          variant="solid"
+          aria-label="Add new task"
+          class="ml-auto"
           @click="changeAddTaskFormVisivility"
-          class="flex items-center bg-blue-200 p-1 border border-blue-200 hover:border-blue-700 duration-200 rounded-md ml-auto"
-        >
-          <Icon
-            name="cuida:plus-outline"
-            class="h-3 w-3 text-blue-700 ms-auto"
-          />
-        </button>
+        />
       </AppColumnHeadline>
       <AppTasksList
         :tasks="store.getNotStartedTasks"

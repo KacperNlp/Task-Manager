@@ -1,19 +1,28 @@
 <template>
-  <div class="relative w-full max-w-md">
-    <label
-      for="search"
-      class="absolute top-1/2 left-2 translate-y-[-50%] cursor-pointer flex items-center"
+  <section class="relative w-full max-w-md">
+    <UForm
+      :state="search"
+      class="space-y-4 w-full max-w-[650px] md:min-w-96"
+      @submit="searchValue"
     >
-      <Icon
-        name="icon-park-outline:search"
-        class="bg-gray-600 hover:bg-blue-500 text-2xl duration-200"
+      <UInput
+        v-model="search.value"
+        icon="i-heroicons-magnifying-glass-20-solid"
+        size="md"
+        color="white"
+        :trailing="false"
+        placeholder="Search..."
       />
-    </label>
-    <input
-      id="search"
-      type="text"
-      placeholder="Search for anything..."
-      class="w-full pl-12 py-3 pr-2 bg-gray-100 text-sm outline-gray-500 outline-1"
-    />
-  </div>
+    </UForm>
+  </section>
 </template>
+
+<script lang="ts" setup>
+const search = reactive({
+  value: "",
+});
+
+function searchValue() {
+  console.log("search");
+}
+</script>
