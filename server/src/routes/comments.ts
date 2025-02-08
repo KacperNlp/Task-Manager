@@ -1,6 +1,6 @@
 import express from "express";
 import Comment from "../models/Comment";
-import type { Request, Response, Router } from "express";
+import type { Request, Response } from "express";
 
 const router = express.Router();
 
