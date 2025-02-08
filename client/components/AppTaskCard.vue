@@ -31,7 +31,7 @@
           <div class="flex gap-2 text-xs text-gray-400">
             <div class="flex items-center gap-1">
               <Icon name="hugeicons:message-02" class="bg-gray-400 text-base" />
-              <span>12 comments</span>
+              <span>{{ task.numberOfComments }} comments</span>
             </div>
 
             <div class="flex items-center gap-1">

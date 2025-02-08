@@ -1,5 +1,5 @@
 import express from "express";
-import moment from "moment";
+import Comment from "../models/Comment";
 import Task from "../models/Task";
 import { handleError } from "../utils/errorHandler";
 import type { Request, Response } from "express";
@@ -13,7 +13,17 @@ router.get("/", async (req: Request, res: Response) => {
       projectId: req.query.projectId,
     });
 
-    res.json(tasks);
+    const tasksWithComments =  await Promise.all(
+      tasks.map(async (task) => {
+        const numberOfComments = (await Comment.find({
+          taskId: task._id
+        })).length
+
+        return {...task.toObject(), numberOfComments};
+      })
+    );
+
+    res.json(tasksWithComments);
   } catch (err) {
     return handleError(res, err);
   }

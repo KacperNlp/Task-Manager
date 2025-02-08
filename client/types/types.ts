@@ -17,7 +17,8 @@ interface Task {
   completed: boolean;
   date: Date,
   status: TaskStatus,
-  taskType: TaskType
+  taskType: TaskType,
+  numberOfComments?: number
 }
 
 interface NewTask {

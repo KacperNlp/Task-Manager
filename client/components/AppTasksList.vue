@@ -10,8 +10,8 @@
     />
   </ul>
 
-  <UModal v-model="isTaskModalActive" class="max-w-[800px]">
-    <AppTaskModal :task-id="clickedTaskId" />
+  <UModal v-model="isTaskModalActive" fullscreen>
+    <AppTaskModal :task-id="clickedTaskId" @closeMoadal="handleCloseModal" />
   </UModal>
 </template>
 
@@ -35,5 +35,10 @@ function updateTaskStatus(task: Task) {
 function openTask(id: string) {
   isTaskModalActive.value = true;
   clickedTaskId.value = id;
+}
+
+function handleCloseModal() {
+  isTaskModalActive.value = false;
+  clickedTaskId.value = null;
 }
 </script>
