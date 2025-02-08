@@ -1,6 +1,6 @@
 <template>
   <section class="grid grid-cols-3 gap-3">
-    <section class="p-4 bg-gray-100 rounded-lg">
+    <AppColumnSection>
       <AppColumnHeadline
         :count="store.getNotStartedTasks.length"
         text="To do"
@@ -21,8 +21,8 @@
         @updateTasks="getUserTasks"
         @updateTaskStatus="updateTaskStatus"
       />
-    </section>
-    <section class="p-4 bg-gray-100 rounded-lg">
+    </AppColumnSection>
+    <AppColumnSection>
       <AppColumnHeadline
         :count="store.getTasksInProgress.length"
         text="On Progress"
@@ -33,8 +33,8 @@
         @updateTasks="getUserTasks"
         @updateTaskStatus="updateTaskStatus"
       />
-    </section>
-    <section class="p-4 bg-gray-100 rounded-lg">
+    </AppColumnSection>
+    <AppColumnSection>
       <AppColumnHeadline
         :count="store.getDoneTasks.length"
         text="Done"
@@ -45,7 +45,7 @@
         @updateTasks="getUserTasks"
         @updateTaskStatus="updateTaskStatus"
       />
-    </section>
+    </AppColumnSection>
     <UModal v-model="formIsActive">
       <AppAddTaskForm
         @closeForm="changeAddTaskFormVisivility"
