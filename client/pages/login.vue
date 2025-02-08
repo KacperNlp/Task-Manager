@@ -1,62 +1,44 @@
 <template>
   <div class="flex justify-center items-center h-screen bg-slate-900">
-    <AppCard class="w-80 md:w-96 shadow-md">
+    <UCard class="w-80 md:w-96 shadow-md">
       <h1 class="text-2xl font-semibold text-center mb-2">
         {{ loginCardTitle }}
       </h1>
-      <form action="POST">
-        <AppInput
+      <UForm :state="form" action="POST" class="space-y-4" @submit="submitForm">
+        <UFormGroup v-if="!userHasAccount" label="Name" name="name">
+          <UInput v-model="form.name" :required="true" type="text" />
+        </UFormGroup>
+        <UFormGroup v-if="!userHasAccount" label="Surname" name="surname">
+          <UInput v-model="form.surname" :required="true" type="text" />
+        </UFormGroup>
+        <UFormGroup label="E-mail" name="email">
+          <UInput v-model="form.email" :required="true" type="email" />
+        </UFormGroup>
+        <UFormGroup label="Password" name="password">
+          <UInput v-model="form.password" :required="true" type="password" />
+        </UFormGroup>
+        <UFormGroup
           v-if="!userHasAccount"
-          v-model="form.name"
-          :is-required="true"
-          type="text"
-          inputId="name"
-          name="name"
-          label="Name"
-        />
-        <AppInput
-          v-if="!userHasAccount"
-          v-model="form.surname"
-          :is-required="true"
-          type="text"
-          inputId="surname"
-          name="surname"
-          label="Surname"
-        />
-        <AppInput
-          v-model="form.email"
-          :is-required="true"
-          type="email"
-          inputId="email"
-          name="email"
-          label="Email"
-        />
-        <AppInput
-          v-model="form.password"
-          :is-required="true"
-          type="password"
-          inputId="password"
-          name="password"
-          label="Password"
-        />
-        <AppInput
-          v-if="!userHasAccount"
-          v-model="form.repeatPassword"
-          :is-required="true"
-          type="password"
-          inputId="repeatPassword"
-          name="repeatPassword"
           label="Repeat password"
-        />
-        <USelect
-          v-if="!userHasAccount"
-          v-model="form.role"
-          :options="roleOptions"
-        />
+          name="repeatPassword"
+        >
+          <UInput
+            v-model="form.repeatPassword"
+            :required="true"
+            type="password"
+          />
+        </UFormGroup>
+        <UFormGroup v-if="!userHasAccount" label="Role" name="role">
+          <USelect
+            v-if="!userHasAccount"
+            v-model="form.role"
+            :options="roleOptions"
+          />
+        </UFormGroup>
         <div class="flex flex-col gap-2 justify-between mt-4">
-          <AppButton @click="submitForm" btn-type="primary" type="submit">{{
+          <UButton color="primary" variant="solid" type="submit" block>{{
             loginCardTitle
-          }}</AppButton>
+          }}</UButton>
           <button
             type="button"
             @click="changeUserHasAccount"
@@ -65,8 +47,8 @@
             {{ btnText }}
           </button>
         </div>
-      </form>
-    </AppCard>
+      </UForm>
+    </UCard>
   </div>
 </template>
 <script setup lang="ts">
