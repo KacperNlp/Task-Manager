@@ -4,7 +4,7 @@
   "main": "app.js",
   "type": "module",
   "scripts": {
-    "watch": "nodemon -x ts-node ./src/app.ts",
+    "watch": "tsx watch ./src/app.ts",
     "dev": "ts-node app.ts",
     "build": "tsc",
     "start": "node dist/app.js"
