@@ -1,5 +1,5 @@
 <template>
-  <AppCard class="shadow-lg">
+  <UCard class="w-full max-w-[750px]">
     <div class="w-full max-w-[750px] md:min-w-[650px] max-h-[80vh]">
       <section class="overflow-y-scroll h-full max-h-[80vh] pr-4 md:pr-8">
         <section>
@@ -30,7 +30,7 @@
         </section>
       </section>
     </div>
-  </AppCard>
+  </UCard>
 </template>
 
 <script lang="ts" setup>

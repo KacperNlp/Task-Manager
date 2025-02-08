@@ -1,12 +1,16 @@
 <template>
-  <section class="fixed bg-zinc-900 h-screen z-10 border-r z-1">
-    <div class="flex items-center gap-2 h-[88px] border-b px-5 py-6">
+  <section
+    class="fixed bg-zinc-900 h-screen z-10 border-r border-r-zinc-600 z-1 duration-400"
+    :class="{ '-translate-x-[270px]': isSidebarActive }"
+  >
+    <div class="flex items-center gap-2 h-[88px] px-5 py-6">
       <img src="/project-logo.svg" alt="Task Manager" />
       <h2 class="text-xl font-semibold mr-10">Project M.</h2>
       <button
         @click="toggleSidebar"
         aria-label="Change sidebar visbility"
         class="flex items-center"
+        :class="{ 'translate-x-[100px]': isSidebarActive }"
       >
         <Icon
           v-show="isSidebarActive"
@@ -21,7 +25,7 @@
       </button>
     </div>
     <nav class="px-5">
-      <ul class="flex flex-col gap-6 border-b py-6">
+      <ul class="flex flex-col gap-6 border-b border-b-zinc-600 py-6">
         <li v-for="link in links">
           <a
             href="#"
@@ -108,7 +112,7 @@ function isSelectedProject(projectId: string) {
 }
 
 function toggleSidebar() {
-  console.log("Toggle");
+  isSidebarActive.value = !isSidebarActive.value;
 }
 
 function handleToggleAddNewProjectForm() {

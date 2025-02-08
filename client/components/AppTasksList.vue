@@ -6,11 +6,13 @@
       :task="task"
       @updateTasks="emit('updateTasks')"
       @updateTaskStatus="updateTaskStatus"
+      @click="openTask(task._id)"
     />
   </ul>
-  <AppLayer v-if="isTaskModalActive" @close-layer="closeTaskModal">
+
+  <UModal v-model="isTaskModalActive" class="max-w-[800px]">
     <AppTaskModal :task-id="clickedTaskId" />
-  </AppLayer>
+  </UModal>
 </template>
 
 <script lang="ts" setup>
@@ -33,10 +35,5 @@ function updateTaskStatus(task: Task) {
 function openTask(id: string) {
   isTaskModalActive.value = true;
   clickedTaskId.value = id;
-}
-
-function closeTaskModal() {
-  isTaskModalActive.value = false;
-  clickedTaskId.value = null;
 }
 </script>

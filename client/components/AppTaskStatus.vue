@@ -1,14 +1,14 @@
 <template>
-  <span class="font-semibold text-sm" :class="taskStatusClasses">{{
-    taskStatusLabel
-  }}</span>
+  <span class="font-semibold text-sm" :class="taskStatusClasses">
+    {{ taskStatusLabel }}
+  </span>
 </template>
 
 <script setup lang="ts">
-import type { taskType } from "../types/types";
+import type { TaskType } from "../types/types";
 
 interface Props {
-  taskStatus: taskType;
+  taskStatus: TaskType;
 }
 
 const props = defineProps<Props>();

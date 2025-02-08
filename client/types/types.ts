@@ -76,4 +76,4 @@ interface StoreState {
 }
 
 export { UserRoles }
-export type { Task, NewTask, TaskStatus, Comment, User, RegisterUser, Project, NewProject, StoreState, Roles };
+export type { Task, NewTask, TaskType, TaskStatus, Comment, User, RegisterUser, Project, NewProject, StoreState, Roles };
