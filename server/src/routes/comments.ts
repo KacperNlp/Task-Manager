@@ -1,5 +1,6 @@
 import express from "express";
 import Comment from "../models/Comment";
+import { handleError } from "../utils/errorHandler";
 import type { Request, Response } from "express";
 
 const router = express.Router();
@@ -17,9 +18,7 @@ router.get("/all/:taskId", async (req: Request<TaskParams>, res: Response) => {
 
     res.json(comments);
   } catch (err) {
-    const errorMessage = err instanceof Error ? err.message : "An unknown error occurred";
-
-    res.status(500).json({ error: errorMessage });
+    return handleError(res, err);
   }
 });
 
@@ -31,9 +30,7 @@ router.post("/add", async (req: Request, res: Response) => {
 
     res.json(savedComment);
   } catch (err) {
-    const errorMessage = err instanceof Error ? err.message : "An unknown error occurred";
-
-    res.status(500).json({ error: errorMessage });
+    return handleError(res, err);
   }
 });
 

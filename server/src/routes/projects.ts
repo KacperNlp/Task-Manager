@@ -1,5 +1,6 @@
 import express from "express";
 import Project from "../models/Project";
+import { handleError } from "../utils/errorHandler";
 import type { Request, Response } from "express";
 
 const router = express.Router();
@@ -13,9 +14,7 @@ router.post("/", async (req: Request, res: Response) => {
 
     res.status(200).json({ message: "Project created" });
   } catch (err) {
-    const errorMessage = err instanceof Error ? err.message : "An unknown error occurred";
-
-    res.status(500).json({ error: errorMessage });
+    return handleError(res, err);
   }
 });
 
@@ -25,9 +24,7 @@ router.get("/", async (req: Request, res: Response) => {
 
     res.json(projects);
   } catch (err) {
-    const errorMessage = err instanceof Error ? err.message : "An unknown error occurred";
-
-    res.status(500).json({ error: errorMessage });
+    return handleError(res, err);
   }
 });
 

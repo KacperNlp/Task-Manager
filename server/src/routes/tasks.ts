@@ -1,6 +1,7 @@
 import express from "express";
 import moment from "moment";
 import Task from "../models/Task";
+import { handleError } from "../utils/errorHandler";
 import type { Request, Response } from "express";
 
 const router = express.Router();
@@ -14,9 +15,7 @@ router.get("/", async (req: Request, res: Response) => {
 
     res.json(tasks);
   } catch (err) {
-    const errorMessage = err instanceof Error ? err.message : "An unknown error occurred";
-
-    res.status(500).json({ error: errorMessage });
+    return handleError(res, err);
   }
 });
 
@@ -26,9 +25,7 @@ router.get("/:id", async (req: Request, res: Response) => {
 
     res.json(task);
   } catch (err) {
-    const errorMessage = err instanceof Error ? err.message : "An unknown error occurred";
-
-    res.status(500).json({ error: errorMessage });
+    return handleError(res, err);
   }
 });
 
@@ -39,9 +36,7 @@ router.post("/add", async (req: Request, res: Response) => {
     const savedTask = await task.save();
     res.json(savedTask);
   } catch (err) {
-    const errorMessage = err instanceof Error ? err.message : "An unknown error occurred";
-
-    res.status(500).json({ error: errorMessage });
+    return handleError(res, err);
   }
 });
 
@@ -55,9 +50,7 @@ router.delete("/:id", async (req: Request, res: Response) => {
 
     res.json({ message: "Task deleted successfully", deletedTask: task });
   } catch (err) {
-    const errorMessage = err instanceof Error ? err.message : "An unknown error occurred";
-
-    res.status(500).json({ error: errorMessage });
+    return handleError(res, err);
   }
 });
 
@@ -75,9 +68,7 @@ router.put("/status/:id", async (req: Request, res: Response) => {
       updatedTask: task,
     });
   } catch (err) {
-    const errorMessage = err instanceof Error ? err.message : "An unknown error occurred";
-
-    res.status(500).json({ error: errorMessage });
+    return handleError(res, err);
   }
 });
 

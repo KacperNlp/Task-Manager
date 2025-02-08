@@ -1,11 +1,13 @@
-const bcrypt = require("bcryptjs");
-const express = require("express");
-const jwt = require("jsonwebtoken");
+import bcrypt from "bcryptjs";
+import express from "express";
+import jwt from "jsonwebtoken";
+import User from "../models/User";
+import { handleError } from "../utils/errorHandler";
+import type { Request, Response } from "express";
+
 const router = express.Router();
 
-const User = require("../models/User");
-
-router.post("/register", async (req, res) => {
+router.post("/register", async (req: Request, res: Response) => {
   try {
     const { email, name, surname, password, role } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -40,11 +42,11 @@ router.post("/register", async (req, res) => {
 
     return res.status(200).json({ success: true, message: "User registered" });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    return handleError(res, err);
   }
 });
 
-router.post("/login", async (req, res) => {
+router.post("/login", async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
@@ -74,33 +76,33 @@ router.post("/login", async (req, res) => {
 
     return res.status(200).json({ success: true, message: "User logged in" });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    return handleError(res, err);
   }
 });
 
-router.post("/logout", (req, res) => {
+router.post("/logout", (req: Request, res: Response) => {
   res.clearCookie("token");
   res.clearCookie("user_id");
   res.json({ message: "User logged out successfully" });
 });
 
-router.get("/users/all", async (req, res) => {
+router.get("/users/all", async (req: Request, res: Response) => {
   try {
     const users = await User.find().select("name surname role _id");
 
     res.status(200).json(users);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    return handleError(res, err);
   }
 });
 
-router.get("/users/logged", async (req, res) => {
+router.get("/users/logged", async (req: Request, res: Response) => {
   try {
     const loggedUser = await User.findById(req.cookies.user_id);
 
     res.status(200).json(loggedUser);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    return handleError(res, err);
   }
 });
 
