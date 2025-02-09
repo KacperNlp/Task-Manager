@@ -5,7 +5,7 @@
     </li>
   </ul>
   <div v-else class="flex justify-center items-center h-32">
-    <span class="text-sm text-gray-400">Brak komentarzy...</span>
+    <span class="text-sm text-gray-400">No comments...</span>
   </div>
 </template>
 <script lang="ts" setup>
