@@ -76,5 +76,5 @@ interface StoreState {
   currentProjectId: string | null
 }
 
-export { UserRoles }
-export type { Task, NewTask, TaskType, TaskStatus, Comment, User, RegisterUser, Project, NewProject, StoreState, Roles };
+export { UserRoles, TaskStatus, TaskType }
+export type { Task, NewTask, Comment, User, RegisterUser, Project, NewProject, StoreState, Roles };
