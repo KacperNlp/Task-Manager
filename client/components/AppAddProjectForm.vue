@@ -45,10 +45,10 @@
 
       <div class="flex flex-row justify-end gap-2 mt-8">
         <AppButton @click="createNewProject" class="text-sm"
-          >Dodaj zadanie</AppButton
+          >Add project</AppButton
         >
         <AppButton @click="$emit('closeForm')" btnType="danger" class="text-sm"
-          >Anuluj</AppButton
+          >Delete</AppButton
         >
       </div>
     </form>
