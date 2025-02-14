@@ -6,7 +6,7 @@ import { UserRoles } from '../../types/types';
 
 
 describe('AppComment', () => {
-    it('AppComment is properly rendering', () => {
+    it('Component renders correctly', () => {
         const comment = {
             _id:  '12',
             taskId: '12',

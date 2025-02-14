@@ -36,7 +36,15 @@ describe('AppCommentsList', () => {
                 comments
             },
             global: {
-                components: { AppComment }
+                components: { AppComment },
+                stubs: {
+                    UCard: {
+                        template: '<div><slot></slot></div>'
+                    },
+                    UAvatar: {
+                        template: '<span />'
+                    }
+                }
             }
         });
 
@@ -56,6 +64,14 @@ describe('AppCommentsList', () => {
             global: {
                 components: {
                     AppComment
+                },
+                stubs: {
+                    UCard: {
+                        template: '<div><slot></slot></div>'
+                    },
+                    UAvatar: {
+                        template: '<span />'
+                    }
                 }
             }
         })
