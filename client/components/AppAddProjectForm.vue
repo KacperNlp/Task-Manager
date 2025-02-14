@@ -32,8 +32,8 @@
       </UFormGroup>
 
       <div class="flex flex-row justify-end gap-2 mt-8">
-        <UButton color="primary" type="submit">Dodaj zadanie</UButton>
-        <UButton @click="$emit('closeForm')" color="red">Anuluj</UButton>
+        <UButton color="primary" type="submit">Add project</UButton>
+        <UButton @click="$emit('closeForm')" color="red">Delete</UButton>
       </div>
     </UForm>
   </UCard>
