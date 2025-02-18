@@ -1,7 +1,9 @@
 <template>
   <section
-    class="fixed bg-zinc-900 h-screen z-10 border-r border-r-zinc-600 z-1 duration-400"
-    :class="{ '-translate-x-[270px]': isSidebarActive }"
+    class="fixed bg-zinc-900 h-screen z-10 border-r border-r-zinc-600 z-1 duration-300"
+    :class="{
+      '-translate-x-[270px]': isSidebarActive,
+    }"
   >
     <div class="flex items-center gap-2 h-[88px] px-5 py-6">
       <img src="/project-logo.svg" alt="Task Manager" />

@@ -9,7 +9,7 @@ const router = express.Router();
 router.get("/", async (req: Request, res: Response) => {
   try {
     const tasks = await Task.find({
-      user_id: req.cookies.user_id,
+      // user_id: req.cookies.user_id,
       projectId: req.query.projectId,
     });
 

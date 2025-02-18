@@ -27,6 +27,7 @@ interface NewTask {
   date: string,
   taskType: TaskType,
   projectId: string | null,
+  userId: string,
 }
 
 interface User {

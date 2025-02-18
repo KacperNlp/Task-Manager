@@ -2,6 +2,7 @@ import bcrypt from "bcryptjs";
 import express from "express";
 import jwt from "jsonwebtoken";
 import User from "../models/User";
+import Project from "../models/Project";
 import { handleError } from "../utils/errorHandler";
 import type { Request, Response } from "express";
 
@@ -86,9 +87,21 @@ router.post("/logout", (req: Request, res: Response) => {
   res.json({ message: "User logged out successfully" });
 });
 
-router.get("/users/all", async (req: Request, res: Response) => {
+router.get("/users/all/:projectId", async (req: Request, res: Response) => {
   try {
-    const users = await User.find().select("name surname role _id");
+    const { projectId } = req.params;
+    let users;
+
+    if(projectId !== 'null') {
+      const project = await Project.findById(projectId).populate("users", "name surname role _id");
+
+      if(!project)
+          return res.status(404).json({ message: 'Project not found!' });
+
+      users = project.users;
+    } else {
+      users = await User.find().select("name surname role _id");
+    }
 
     res.status(200).json(users);
   } catch (err) {

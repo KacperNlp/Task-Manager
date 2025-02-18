@@ -22,6 +22,21 @@
       <UFormGroup label="Task priority" name="priority">
         <USelect v-model="form.taskType" :options="TASKS_IMPORTANCE" />
       </UFormGroup>
+      <UFormGroup label="Assign user" name="users">
+        <USelectMenu
+          v-model="form.userId"
+          :options="users"
+          placeholder="Select people"
+          value-attribute="_id"
+          option-attribute="name"
+        >
+          <template #option="{ option: person }">
+            <span class="text-xs">
+              {{ person.name }} {{ person.surname }} - {{ person.role }}
+            </span>
+          </template>
+        </USelectMenu>
+      </UFormGroup>
 
       <div class="flex flex-row justify-end gap-2 mt-8">
         <UButton color="primary" type="submit">Dodaj zadanie</UButton>
@@ -33,11 +48,14 @@
 
 <script setup lang="ts">
 import TasksManager from "~/services/TasksManager";
-import type { NewTask } from "@/types/types";
+import UsersManager from "../services/UsersManager";
+import type { User, NewTask } from "@/types/types";
 
 const TASKS_IMPORTANCE = ["Low", "Medium", "Hight"];
 
 const store = useWebsiteStore();
+
+const users = ref<User[]>([]);
 
 const form = reactive<NewTask>({
   title: "",
@@ -45,6 +63,7 @@ const form = reactive<NewTask>({
   date: new Date().toISOString().slice(0, 10),
   taskType: "Low",
   projectId: "",
+  userId: "",
 });
 
 const emit = defineEmits(["closeForm", "updateTasks"]);
@@ -67,4 +86,18 @@ async function addTask() {
     console.error(error);
   }
 }
+
+async function fetchAllUsers() {
+  try {
+    const res = await UsersManager.getUsers(store.currentProjectId);
+
+    users.value = res;
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+onMounted(async () => {
+  await fetchAllUsers();
+});
 </script>
