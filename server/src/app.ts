@@ -3,16 +3,20 @@ import cors from "cors";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
+import { Server } from "socket.io";
+import http from "http";
 
 dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 8080;
-
-// const comments = require("./routes/comments");
-// const projects = require("./routes/projects");
-// const tasks = require("./routes/tasks");
-// const users = require("./routes/users");
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: process.env.CLIENT_URL,
+    methods: ["GET", "POST"],
+  },
+});
 
 import comments from "./routes/comments";
 import projects from "./routes/projects";
@@ -43,6 +47,26 @@ app.use("/comments", comments);
 app.use("/projects", projects);
 app.use("/tasks", tasks);
 app.use("/", users);
+
+io.on("connection", (socket) => {
+  console.log("Użytkownik połączony:", socket.id);
+
+  socket.on("joinProject", (projectId) => {
+    socket.join(projectId);
+  });
+
+  socket.on("newTask", (data) => {
+    io.to(data.projectId).emit("taskAssigned", data);
+  });
+
+  socket.on("sendMessage", (data) => {
+    io.to(data.projectId).emit("receiveMessage", data);
+  });
+
+  socket.on("disconnect", () => {
+    console.log("Użytkownik odłączony:", socket.id);
+  });
+});
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
