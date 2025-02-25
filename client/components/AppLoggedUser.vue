@@ -7,8 +7,18 @@
     >
       <div class="flex gap-3 items-center">
         <div class="flex flex-col items-end text-sm">
-          <strong>{{ loggedUserNameAndSurname }}</strong>
-          <span class="text-gray-400 text-xs">{{ loggedUserRole }}</span>
+          <strong v-if="store.isLoggedUserLoaded">{{
+            loggedUserNameAndSurname
+          }}</strong>
+          <div v-else>
+            <AppTextPlaceholder />
+          </div>
+          <span v-if="store.isLoggedUserLoaded" class="text-gray-400 text-xs">{{
+            loggedUserRole
+          }}</span>
+          <div v-else>
+            <AppTextPlaceholder />
+          </div>
         </div>
         <UAvatar src="https://avatars.githubusercontent.com/u/739984?v=4" />
       </div>

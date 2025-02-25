@@ -1,5 +1,5 @@
 <template>
-  <li
+  <div
     class="relative py-4 px-2 lg:px-4 rounded-md hover:shadow-md duration-200 bg-zinc-950 cursor-pointer"
   >
     <article>
@@ -63,7 +63,7 @@
         </div>
       </div>
     </article>
-  </li>
+  </div>
 </template>
 
 <script lang="ts" setup>

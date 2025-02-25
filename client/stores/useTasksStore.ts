@@ -5,6 +5,7 @@ import type { Task } from "~/types/types";
 export const useTasksStore = defineStore("tasks", {
   state: () => ({
     tasks: [] as Task[],
+    isTasksLoaded: false
   }),
 
   getters: {
@@ -15,7 +16,9 @@ export const useTasksStore = defineStore("tasks", {
 
   actions: {
     async fetchTasks(projectId: string) {
-      this.tasks = await TasksManager.getTasks(projectId);
+        this.isTasksLoaded = false;
+        this.tasks = await TasksManager.getTasks(projectId);
+        this.isTasksLoaded = true;
     },
   }
 });

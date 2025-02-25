@@ -56,7 +56,10 @@
         </button>
       </div>
       <ul class="flex flex-col gap-2">
-        <li v-for="project in store.projects">
+        {{
+          console.log("Sidebar " + store.isProjectsLoaded)
+        }}
+        <li v-if="store.isProjectsLoaded" v-for="project in store.projects">
           <NuxtLink
             @click="handleClickChangeProject(project._id)"
             :to="`/?project=${project._id}`"
@@ -74,6 +77,7 @@
             <span>{{ project.name }}</span>
           </NuxtLink>
         </li>
+        <li v-else v-for="n in 3" :key="n"><AppSmallPlaceholder /></li>
       </ul>
     </nav>
   </section>
@@ -81,6 +85,7 @@
     <AppAddProjectForm @closeForm="handleToggleAddNewProjectForm" />
   </UModal>
 </template>
+
 <script setup lang="ts">
 const store = useProjectsStore();
 const isSidebarActive = ref(false);

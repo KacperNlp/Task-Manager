@@ -6,6 +6,7 @@ export const useProjectsStore = defineStore("projects", {
   state: () => ({
     projects: [] as Project[],
     currentProjectId: null as string | null,
+    isProjectsLoaded: false,
   }),
 
   getters: {
@@ -14,7 +15,11 @@ export const useProjectsStore = defineStore("projects", {
 
   actions: {
     async fetchProjects() {
-      this.projects = await ProjectsManager.getProjects();
+        console.log(this.isProjectsLoaded)
+        this.isProjectsLoaded = false;
+        this.projects = await ProjectsManager.getProjects();
+        this.isProjectsLoaded = true;
+        console.log(this.isProjectsLoaded)
     },
 
     changeCurrentProject(projectId: string) {

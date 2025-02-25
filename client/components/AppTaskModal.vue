@@ -59,7 +59,7 @@
 import type { Task, Comment } from "~/types/types";
 
 interface Props {
-  taskId: string;
+  taskId: string | null;
 }
 
 defineEmits(["closeMoadal"]);
