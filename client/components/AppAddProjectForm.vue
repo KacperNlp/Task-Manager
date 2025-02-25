@@ -44,7 +44,7 @@ import ProjectsManager from "../services/ProjectsManager";
 import UsersManager from "../services/UsersManager";
 import type { User, NewProject } from "../types/types";
 
-const store = useWebsiteStore();
+const store = useProjectsStore();
 
 const emit = defineEmits(["closeForm"]);
 
@@ -69,7 +69,7 @@ async function fetchAllUsers() {
 async function createNewProject() {
   try {
     await ProjectsManager.createProject(form);
-    await store.fetchProjectsList();
+    await store.fetchProjects();
     emit("closeForm");
   } catch (err) {
     console.error(err);

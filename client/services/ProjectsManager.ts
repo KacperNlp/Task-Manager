@@ -14,7 +14,7 @@ export default abstract class ProjectsManager {
 
     static async createProject(data: NewProject) {
         const config = useRuntimeConfig();
-        const store = useWebsiteStore();
+        const store = useProjectsStore();
 
         await $fetch(`${config.public.apiURL}/projects`, {
             method: "POST",
@@ -22,6 +22,6 @@ export default abstract class ProjectsManager {
             body: JSON.stringify(data),
         });
 
-        store.fetchProjectsList();
+        store.fetchProjects();
     }
 }

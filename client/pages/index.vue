@@ -8,21 +8,28 @@
 </template>
 
 <script lang="ts" setup>
-const store = useWebsiteStore();
+const tasksStore = useTasksStore();
+const usersStore = useUsersStore();
+const projectsStore = useProjectsStore();
+
 const route = useRoute();
 
 async function fetchAllRequiredData() {
   try {
-    await Promise.all([store.fetchProjectsList(), store.fetchLoggedUserData()]);
+    await Promise.all([
+      projectsStore.fetchProjects(),
+      usersStore.fetchLoggedUser(),
+    ]);
 
     const queryValue = route.query?.project;
-    const projetId = Array.isArray(queryValue)
-      ? queryValue[0]
-      : queryValue || "";
+    let projetId = Array.isArray(queryValue) ? queryValue[0] : queryValue || "";
 
-    store.setProject(projetId);
+    projetId = projetId || projectsStore.projects[0]._id;
 
-    await store.fetchTasks();
+    if (projetId) {
+      projectsStore.changeCurrentProject(projetId);
+      await tasksStore.fetchTasks(projetId);
+    }
   } catch (error) {
     console.error(error);
   }

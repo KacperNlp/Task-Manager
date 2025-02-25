@@ -2,7 +2,7 @@
   <section class="grid grid-cols-3 gap-3">
     <AppColumnSection>
       <AppColumnHeadline
-        :count="store.getNotStartedTasks.length"
+        :count="tasksStore.notStartedTasks.length"
         text="To do"
         columnType="toDo"
       >
@@ -18,31 +18,31 @@
         />
       </AppColumnHeadline>
       <AppTasksList
-        :tasks="store.getNotStartedTasks"
+        :tasks="tasksStore.notStartedTasks"
         @updateTasks="getUserTasks"
         @updateTaskStatus="updateTaskStatus"
       />
     </AppColumnSection>
     <AppColumnSection>
       <AppColumnHeadline
-        :count="store.getTasksInProgress.length"
+        :count="tasksStore.inProgressTasks.length"
         text="On Progress"
         columnType="progress"
       />
       <AppTasksList
-        :tasks="store.getTasksInProgress"
+        :tasks="tasksStore.inProgressTasks"
         @updateTasks="getUserTasks"
         @updateTaskStatus="updateTaskStatus"
       />
     </AppColumnSection>
     <AppColumnSection>
       <AppColumnHeadline
-        :count="store.getDoneTasks.length"
+        :count="tasksStore.doneTasks.length"
         text="Done"
         columnType="done"
       />
       <AppTasksList
-        :tasks="store.getDoneTasks"
+        :tasks="tasksStore.doneTasks"
         @updateTasks="getUserTasks"
         @updateTaskStatus="updateTaskStatus"
       />
@@ -58,13 +58,15 @@
 <script setup lang="ts">
 import type { Task } from "../types/types";
 
-const store = useWebsiteStore();
+const tasksStore = useTasksStore();
+const projectStore = useProjectsStore();
 
 const formIsActive = ref(false);
 
 async function getUserTasks() {
   try {
-    await store.fetchTasks();
+    const { currentProjectId } = projectStore;
+    if (currentProjectId) await tasksStore.fetchTasks(currentProjectId);
   } catch (error) {
     console.error(error);
   }

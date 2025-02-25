@@ -82,7 +82,7 @@
   </UModal>
 </template>
 <script setup lang="ts">
-const store = useWebsiteStore();
+const store = useProjectsStore();
 const isSidebarActive = ref(false);
 const formIsActive = ref(false);
 

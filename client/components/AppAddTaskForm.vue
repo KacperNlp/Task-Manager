@@ -53,7 +53,7 @@ import type { User, NewTask } from "@/types/types";
 
 const TASKS_IMPORTANCE = ["Low", "Medium", "Hight"];
 
-const store = useWebsiteStore();
+const store = useProjectsStore();
 
 const users = ref<User[]>([]);
 

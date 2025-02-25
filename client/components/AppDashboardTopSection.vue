@@ -1,7 +1,7 @@
 <template>
   <div class="flex items-center gap-8">
     <h1 class="text-5xl font-bold">
-      {{ store.getuCurrentProject?.name }}
+      {{ store.currentProject?.name }}
     </h1>
     <div class="flex gap-4">
       <UButton
@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-const store = useWebsiteStore();
+const store = useProjectsStore();
 
 function editProject() {
   console.log("Edit project!!");

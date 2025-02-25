@@ -38,7 +38,7 @@
 const { logout } = useAuth();
 
 const router = useRouter();
-const store = useWebsiteStore();
+const store = useUsersStore();
 
 const loggedUserNameAndSurname = computed(
   () => `${store.loggedUser?.name} ${store.loggedUser?.surname}`

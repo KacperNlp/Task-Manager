@@ -70,12 +70,5 @@ interface NewProject {
   users: string[]
 }
 
-interface StoreState {
-  projects: Project[],
-  tasks: Task[],
-  loggedUser: User | null,
-  currentProjectId: string | null
-}
-
 export { UserRoles, TaskStatus, TaskType }
-export type { Task, NewTask, Comment, User, RegisterUser, Project, NewProject, StoreState, Roles };
+export type { Task, NewTask, Comment, User, RegisterUser, Project, NewProject, Roles };
