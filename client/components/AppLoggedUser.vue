@@ -10,14 +10,14 @@
           <strong v-if="store.isLoggedUserLoaded">{{
             loggedUserNameAndSurname
           }}</strong>
-          <div v-else>
-            <AppTextPlaceholder />
+          <div v-else class="mb-1">
+            <AppTextPlaceholder size="sm" />
           </div>
           <span v-if="store.isLoggedUserLoaded" class="text-gray-400 text-xs">{{
             loggedUserRole
           }}</span>
           <div v-else>
-            <AppTextPlaceholder />
+            <AppTextPlaceholder size="sm" />
           </div>
         </div>
         <UAvatar src="https://avatars.githubusercontent.com/u/739984?v=4" />

@@ -56,9 +56,6 @@
         </button>
       </div>
       <ul class="flex flex-col gap-2">
-        {{
-          console.log("Sidebar " + store.isProjectsLoaded)
-        }}
         <li v-if="store.isProjectsLoaded" v-for="project in store.projects">
           <NuxtLink
             @click="handleClickChangeProject(project._id)"

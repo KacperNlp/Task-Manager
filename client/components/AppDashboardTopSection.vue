@@ -1,11 +1,10 @@
 <template>
   <div class="flex items-center gap-8">
-    {{ console.log(store.isProjectsLoaded) }}
     <h1 v-if="store.isProjectsLoaded" class="text-5xl font-bold">
       {{ store.currentProject?.name }}
     </h1>
     <div v-else>
-      <AppTextPlaceholder />
+      <AppTextPlaceholder size="xl" />
     </div>
     <div class="flex gap-4">
       <UButton

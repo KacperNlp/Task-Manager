@@ -1,3 +1,4 @@
+import { nextTick } from 'vue';
 import { defineStore } from "pinia";
 import ProjectsManager from "~/services/ProjectsManager";
 import type { Project } from "~/types/types";
@@ -15,11 +16,10 @@ export const useProjectsStore = defineStore("projects", {
 
   actions: {
     async fetchProjects() {
-        console.log(this.isProjectsLoaded)
         this.isProjectsLoaded = false;
+        await nextTick();
         this.projects = await ProjectsManager.getProjects();
         this.isProjectsLoaded = true;
-        console.log(this.isProjectsLoaded)
     },
 
     changeCurrentProject(projectId: string) {

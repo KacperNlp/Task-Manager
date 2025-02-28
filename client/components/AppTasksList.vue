@@ -1,22 +1,21 @@
 <template>
-  <ul
-    v-if="tasks?.length && tasksStore.isTasksLoaded"
-    class="flex flex-col gap-2"
-  >
-    <li v-for="task in tasks" :key="task._id">
-      <AppTaskCard
-        :task="task"
-        @updateTasks="emit('updateTasks')"
-        @updateTaskStatus="updateTaskStatus"
-        @click="openTask(task._id)"
-      />
-    </li>
-  </ul>
+  <ul class="flex flex-col gap-2">
+    <template v-if="!tasksStore.isTasksLoaded">
+      <div v-for="n in 3" :key="n">
+        <AppHugePlaceholder />
+      </div>
+    </template>
 
-  <ul v-else-if="!tasksStore.isTasksLoaded" class="flex flex-col gap-2">
-    <ol v-for="n in 3" :key="n">
-      <AppHugePlaceholder />
-    </ol>
+    <template v-else-if="tasks?.length">
+      <li v-for="task in tasks" :key="task._id">
+        <AppTaskCard
+          :task="task"
+          @updateTasks="emit('updateTasks')"
+          @updateTaskStatus="updateTaskStatus"
+          @click="openTask(task._id)"
+        />
+      </li>
+    </template>
   </ul>
 
   <UModal v-model="isTaskModalActive" fullscreen>
