@@ -11,6 +11,8 @@
 const store = useWebsiteStore();
 const route = useRoute();
 
+const { $socket } = useNuxtApp();
+
 async function fetchAllRequiredData() {
   try {
     await Promise.all([store.fetchProjectsList(), store.fetchLoggedUserData()]);
@@ -23,6 +25,7 @@ async function fetchAllRequiredData() {
     store.setProject(projetId);
 
     await store.fetchTasks();
+    $socket.connect();
   } catch (error) {
     console.error(error);
   }

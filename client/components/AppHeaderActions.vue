@@ -15,9 +15,6 @@ const actionsButtons = [
     icon: "famicons:calendar-outline",
   },
   {
-    icon: "token:chat",
-  },
-  {
     icon: "fluent:alert-16-regular",
   },
 ];
