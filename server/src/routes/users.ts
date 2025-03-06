@@ -119,4 +119,4 @@ router.get("/users/logged", async (req: Request, res: Response) => {
   }
 });
 
-module.exports = router;
+export default router;
