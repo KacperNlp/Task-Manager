@@ -55,7 +55,10 @@
 </template>
 
 <script setup lang="ts">
-const projectStore = useWebsiteStore();
+import type { Message } from "~/types/types";
+
+const projectsStore = useProjectsStore();
+const usersStore = useUsersStore();
 
 const isChatOpen = ref(false);
 const message = ref("");
@@ -63,28 +66,7 @@ const chatContainer = ref<HTMLDivElement | null>(null);
 
 const ws = ref<WebSocket | null>(null);
 
-const messages = reactive([
-  {
-    author: "John",
-    message: "Hi! How can I help you today?",
-  },
-  {
-    author: "You",
-    message: "I need some help with my order.",
-  },
-  {
-    author: "John",
-    message: "Sure. Please, provide your order number.",
-  },
-  {
-    author: "You",
-    message: "My order number is 123456.",
-  },
-  {
-    author: "John",
-    message: "Thanks for your help!",
-  },
-]);
+const messages = reactive<Message | []>([]);
 
 function scrollToBottom() {
   nextTick(() => {
@@ -100,11 +82,7 @@ function handleToggleChat() {
 
 async function handleSendMessage() {
   try {
-    messages.push({
-      author: "You",
-      message: message.value,
-    });
-    message.value = "";
+    console.log(usersStore.loggedUser);
     scrollToBottom();
   } catch (err) {
     console.error(err);
@@ -116,15 +94,32 @@ onMounted(() => {
   ws.value = new WebSocket("ws://localhost:8081");
 
   ws.value.onopen = () => {
-    \ws.value?.send(JSON({
-      type: "join",
-      projectId: s,
-    }))
+    ws.value?.send(
+      JSON.stringify({
+        type: "join",
+        projectId: projectsStore.currentProjectId,
+      })
+    );
   };
 
   ws.value.onmessage = (event) => {
-    console.log("Received message:", event.data);
-    console.log("Received event:", event);
+    const message = JSON.parse(event.data);
+    if (message.type === "message") {
+      messages.push({
+        author: message.author,
+        message: message.message,
+      });
+      scrollToBottom();
+    } else if (message.type === "messages") {
+      messages.length = 0;
+      message.messages.forEach((message: any) => {
+        messages.push({
+          author: message.author,
+          message: message.message,
+        });
+      });
+      scrollToBottom();
+    }
   };
 
   ws.value.onclose = () => {

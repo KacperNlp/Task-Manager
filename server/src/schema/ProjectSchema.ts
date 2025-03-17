@@ -15,6 +15,12 @@ const ProjectSchema = new Schema({
       ref: "User",
     },
   ],
+  messages:[
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Message",
+    },
+  ],
   name: {
     type: String,
     required: true,

@@ -70,5 +70,13 @@ interface NewProject {
   users: string[]
 }
 
+interface Message {
+  _id: string,
+  projectId: string,
+  user: User,
+  text: string,
+  date: Date
+}
+
 export { UserRoles, TaskStatus, TaskType }
-export type { Task, NewTask, Comment, User, RegisterUser, Project, NewProject, Roles };
+export type { Task, NewTask, Comment, User, RegisterUser, Project, NewProject, Roles, Message };

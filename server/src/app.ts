@@ -3,27 +3,14 @@ import cors from "cors";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
-import http from "http";
-import { WebSocketServer  } from "ws";
+import websocketSetup from "./websocket";
 
 dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 8080;
-const server = http.createServer(app);
 
-const wss = new WebSocketServer({ port: 8081 });
-
-wss.on("connection", (ws: WebSocket) => {
-  console.log("Client connected");
-  ws.on("message", (message: string) => {
-    console.log("Received message:", message);
-  });
-  
-  ws.on("close", () => {
-    console.log("Client disconnected");
-  });
-});
+websocketSetup();
 
 import comments from "./routes/comments";
 import projects from "./routes/projects";
