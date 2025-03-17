@@ -16,6 +16,8 @@ const route = useRoute();
 
 const { $socket } = useNuxtApp();
 
+const { $socket } = useNuxtApp();
+
 async function fetchAllRequiredData() {
   try {
     await Promise.all([

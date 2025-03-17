@@ -42,6 +42,26 @@ app.use("/projects", projects);
 app.use("/tasks", tasks);
 app.use("/", users);
 
+io.on("connection", (socket) => {
+  console.log("Użytkownik połączony:", socket.id);
+
+  socket.on("joinProject", (projectId) => {
+    socket.join(projectId);
+  });
+
+  socket.on("newTask", (data) => {
+    io.to(data.projectId).emit("taskAssigned", data);
+  });
+
+  socket.on("sendMessage", (data) => {
+    io.to(data.projectId).emit("receiveMessage", data);
+  });
+
+  socket.on("disconnect", () => {
+    console.log("Użytkownik odłączony:", socket.id);
+  });
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
