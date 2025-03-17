@@ -3,19 +3,26 @@ import cors from "cors";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
-import { Server } from "socket.io";
 import http from "http";
+import { WebSocketServer  } from "ws";
 
 dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 8080;
 const server = http.createServer(app);
-const io = new Server(server, {
-  cors: {
-    origin: process.env.CLIENT_URL,
-    methods: ["GET", "POST"],
-  },
+
+const wss = new WebSocketServer({ port: 8081 });
+
+wss.on("connection", (ws: WebSocket) => {
+  console.log("Client connected");
+  ws.on("message", (message: string) => {
+    console.log("Received message:", message);
+  });
+  
+  ws.on("close", () => {
+    console.log("Client disconnected");
+  });
 });
 
 import comments from "./routes/comments";
@@ -47,26 +54,6 @@ app.use("/comments", comments);
 app.use("/projects", projects);
 app.use("/tasks", tasks);
 app.use("/", users);
-
-io.on("connection", (socket) => {
-  console.log("Użytkownik połączony:", socket.id);
-
-  socket.on("joinProject", (projectId) => {
-    socket.join(projectId);
-  });
-
-  socket.on("newTask", (data) => {
-    io.to(data.projectId).emit("taskAssigned", data);
-  });
-
-  socket.on("sendMessage", (data) => {
-    io.to(data.projectId).emit("receiveMessage", data);
-  });
-
-  socket.on("disconnect", () => {
-    console.log("Użytkownik odłączony:", socket.id);
-  });
-});
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

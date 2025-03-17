@@ -55,9 +55,13 @@
 </template>
 
 <script setup lang="ts">
+const projectStore = useWebsiteStore();
+
 const isChatOpen = ref(false);
 const message = ref("");
 const chatContainer = ref<HTMLDivElement | null>(null);
+
+const ws = ref<WebSocket | null>(null);
 
 const messages = reactive([
   {
@@ -107,5 +111,28 @@ async function handleSendMessage() {
   }
 }
 
-onMounted(scrollToBottom);
+onMounted(() => {
+  scrollToBottom();
+  ws.value = new WebSocket("ws://localhost:8081");
+
+  ws.value.onopen = () => {
+    \ws.value?.send(JSON({
+      type: "join",
+      projectId: s,
+    }))
+  };
+
+  ws.value.onmessage = (event) => {
+    console.log("Received message:", event.data);
+    console.log("Received event:", event);
+  };
+
+  ws.value.onclose = () => {
+    console.log("Disconnected from server");
+  };
+});
+
+onBeforeUnmount(() => {
+  ws.value?.close();
+});
 </script>
