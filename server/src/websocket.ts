@@ -19,6 +19,19 @@ export default function websocketSetup() {
               type: "messages",
               messages: projectMessages
             }));
+          } else if(messageObject.type === "message") {
+            await Message.create({ projectId: messageObject.projectId, user: messageObject.author, text: messageObject.message });
+
+            const projectMessages = await Message.find({ projectId: messageObject.projectId }).populate("user", "name").sort({ date: 1 }).exec();
+
+            wss.clients.forEach(client => {
+              if(client.readyState === WebSocket.OPEN) {
+                client.send(JSON.stringify({
+                  type: "messages",
+                  messages: projectMessages
+                }));
+              }
+            });
           }
         });
         

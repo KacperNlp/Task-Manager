@@ -71,8 +71,6 @@ interface NewProject {
 }
 
 interface Message {
-  _id: string,
-  projectId: string,
   user: User,
   text: string,
   date: Date

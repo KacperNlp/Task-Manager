@@ -24,13 +24,15 @@
         />
       </div>
       <div
+        v-if="messages.length"
         ref="chatConteiner"
         class="flex flex-col mt-4 space-y-2 flex-grow overflow-y-auto pb-4"
       >
         <AppChatMessages
           v-for="message in messages"
-          :message="message.message"
-          :author="message.author"
+          :message="message.text"
+          :user="message.user.name"
+          :user-id="message.user._id"
         />
       </div>
       <div class="mt-auto p-4 mr-[-16px] mb-[-16px] ml-[-16px] bg-zinc-800">
@@ -66,7 +68,7 @@ const chatContainer = ref<HTMLDivElement | null>(null);
 
 const ws = ref<WebSocket | null>(null);
 
-const messages = reactive<Message | []>([]);
+const messages = reactive<Message[] | []>([]);
 
 function scrollToBottom() {
   nextTick(() => {
@@ -82,7 +84,16 @@ function handleToggleChat() {
 
 async function handleSendMessage() {
   try {
-    console.log(usersStore.loggedUser);
+    if (usersStore.loggedUser === null) return;
+
+    ws.value?.send(
+      JSON.stringify({
+        type: "message",
+        projectId: projectsStore.currentProjectId,
+        author: usersStore.loggedUser._id,
+        message: message.value,
+      })
+    );
     scrollToBottom();
   } catch (err) {
     console.error(err);
@@ -103,21 +114,28 @@ onMounted(() => {
   };
 
   ws.value.onmessage = (event) => {
-    const message = JSON.parse(event.data);
-    if (message.type === "message") {
+    const res = JSON.parse(event.data);
+    console.log(res);
+
+    if (res.type === "message") {
       messages.push({
-        author: message.author,
-        message: message.message,
+        user: res.user,
+        text: res.text,
+        date: res.date,
       });
+
       scrollToBottom();
-    } else if (message.type === "messages") {
+    } else if (res.type === "messages") {
       messages.length = 0;
-      message.messages.forEach((message: any) => {
+
+      res.messages.forEach((message: any) => {
         messages.push({
-          author: message.author,
-          message: message.message,
+          user: message.user,
+          text: message.text,
+          date: message.date,
         });
       });
+
       scrollToBottom();
     }
   };

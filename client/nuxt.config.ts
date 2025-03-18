@@ -18,10 +18,4 @@ export default defineNuxtConfig({
       apiURL: process.env.API_URL
     }
   },
-
-  nitro: {
-    experimental: {
-      websocket: true
-    },
-  }
 })
