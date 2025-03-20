@@ -70,11 +70,15 @@ interface NewProject {
   users: string[]
 }
 
-interface Message {
+interface MessageToSend {
   user: User,
   text: string,
   date: Date
 }
 
+interface Message extends MessageToSend {
+  _id: string,
+}
+
 export { UserRoles, TaskStatus, TaskType }
-export type { Task, NewTask, Comment, User, RegisterUser, Project, NewProject, Roles, Message };
+export type { Task, NewTask, Comment, User, RegisterUser, Project, NewProject, Roles, Message, MessageToSend };

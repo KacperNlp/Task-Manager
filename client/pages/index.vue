@@ -12,6 +12,8 @@ const tasksStore = useTasksStore();
 const usersStore = useUsersStore();
 const projectsStore = useProjectsStore();
 
+const { $websocket } = useNuxtApp();
+
 const route = useRoute();
 
 async function fetchAllRequiredData() {
@@ -28,8 +30,9 @@ async function fetchAllRequiredData() {
 
     if (projetId) {
       projectsStore.changeCurrentProject(projetId);
-      await tasksStore.fetchTasks(projetId);
     }
+
+    $websocket.connect(projetId);
   } catch (error) {
     console.error(error);
   }

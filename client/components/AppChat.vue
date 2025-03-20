@@ -24,15 +24,16 @@
         />
       </div>
       <div
-        v-if="messages.length"
+        v-if="messagesStore.getMessages.length"
         ref="chatConteiner"
         class="flex flex-col mt-4 space-y-2 flex-grow overflow-y-auto pb-4"
       >
         <AppChatMessages
-          v-for="message in messages"
+          v-for="message in messagesStore.getMessages"
           :message="message.text"
           :user="message.user.name"
           :user-id="message.user._id"
+          :key="message._id"
         />
       </div>
       <div class="mt-auto p-4 mr-[-16px] mb-[-16px] ml-[-16px] bg-zinc-800">
@@ -57,18 +58,13 @@
 </template>
 
 <script setup lang="ts">
-import type { Message } from "~/types/types";
+const { $websocket } = useNuxtApp();
 
-const projectsStore = useProjectsStore();
-const usersStore = useUsersStore();
+const messagesStore = useMessagesStore();
 
-const isChatOpen = ref(false);
 const message = ref("");
+const isChatOpen = ref(false);
 const chatContainer = ref<HTMLDivElement | null>(null);
-
-const ws = ref<WebSocket | null>(null);
-
-const messages = reactive<Message[] | []>([]);
 
 function scrollToBottom() {
   nextTick(() => {
@@ -84,68 +80,12 @@ function handleToggleChat() {
 
 async function handleSendMessage() {
   try {
-    if (usersStore.loggedUser === null) return;
+    $websocket.sendMessage(message.value);
 
-    ws.value?.send(
-      JSON.stringify({
-        type: "message",
-        projectId: projectsStore.currentProjectId,
-        author: usersStore.loggedUser._id,
-        message: message.value,
-      })
-    );
+    message.value = "";
     scrollToBottom();
   } catch (err) {
     console.error(err);
   }
 }
-
-onMounted(() => {
-  scrollToBottom();
-  ws.value = new WebSocket("ws://localhost:8081");
-
-  ws.value.onopen = () => {
-    ws.value?.send(
-      JSON.stringify({
-        type: "join",
-        projectId: projectsStore.currentProjectId,
-      })
-    );
-  };
-
-  ws.value.onmessage = (event) => {
-    const res = JSON.parse(event.data);
-    console.log(res);
-
-    if (res.type === "message") {
-      messages.push({
-        user: res.user,
-        text: res.text,
-        date: res.date,
-      });
-
-      scrollToBottom();
-    } else if (res.type === "messages") {
-      messages.length = 0;
-
-      res.messages.forEach((message: any) => {
-        messages.push({
-          user: message.user,
-          text: message.text,
-          date: message.date,
-        });
-      });
-
-      scrollToBottom();
-    }
-  };
-
-  ws.value.onclose = () => {
-    console.log("Disconnected from server");
-  };
-});
-
-onBeforeUnmount(() => {
-  ws.value?.close();
-});
 </script>

@@ -25,6 +25,9 @@ export const useProjectsStore = defineStore("projects", {
     changeCurrentProject(projectId: string) {
       if (this.currentProjectId !== projectId) {
         this.currentProjectId = projectId;
+
+        const tasksStore = useTasksStore();
+        tasksStore.fetchTasks(projectId);
       }
     }
   }

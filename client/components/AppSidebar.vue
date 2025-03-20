@@ -84,6 +84,8 @@
 </template>
 
 <script setup lang="ts">
+const { $websocket } = useNuxtApp();
+
 const store = useProjectsStore();
 const isSidebarActive = ref(false);
 const formIsActive = ref(false);
@@ -125,5 +127,7 @@ function handleToggleAddNewProjectForm() {
 
 function handleClickChangeProject(projectId: string) {
   store.changeCurrentProject(projectId);
+
+  $websocket.connect(projectId);
 }
 </script>
