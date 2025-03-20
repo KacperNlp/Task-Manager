@@ -28,7 +28,7 @@ export default function websocketSetup() {
       
           if(messageObject.type === "join") {
             console.log("Client joined project", messageObject.projectId);
-            
+
             userConnections.set(messageObject.userId, ws);
 
             if (!projectSubscriptions.has(messageObject.projectId)) {
@@ -51,8 +51,6 @@ export default function websocketSetup() {
               type: "messages",
               messages: projectMessages,
             });
-          } else if(messageObject.type === "task") {
-            console.log("Client joined task", messageObject.taskId);
           }
         });
         
@@ -74,3 +72,5 @@ const notifyProjectUsers = async (projectId: string, data: DataObject) => {
     }
   });
 };
+
+export { userConnections, projectSubscriptions };

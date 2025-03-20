@@ -80,5 +80,13 @@ interface Message extends MessageToSend {
   _id: string,
 }
 
+interface Notification {
+  _id: string,
+  title: string,
+  message: string,
+  projectId: string,
+  taskId: string,
+}
+
 export { UserRoles, TaskStatus, TaskType }
-export type { Task, NewTask, Comment, User, RegisterUser, Project, NewProject, Roles, Message, MessageToSend };
+export type { Task, NewTask, Comment, User, RegisterUser, Project, NewProject, Roles, Message, MessageToSend, Notification };

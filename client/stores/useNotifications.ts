@@ -1,9 +1,11 @@
-export const useNotifications = defineStore("notifications", {
+import type { Notification } from "~/types/types";
+
+export const useNotificationsStore = defineStore("notifications", {
     state: () => ({
-        notifications: [] as string[],
+        notifications: [] as Notification[],
     }),
     actions: {
-        addNotification(notification: string) {
+        addNotification(notification: Notification) {
             this.notifications.push(notification);
         },
     },

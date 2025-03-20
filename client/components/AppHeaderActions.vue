@@ -4,30 +4,35 @@
       <Icon
         :name="actionBtn.icon"
         class="bg-gray-400 text-2xl hover:bg-emerald-500 cursor-pointer"
+        @click="actionBtn.onClick"
       />
     </li>
   </ul>
+
+  <UModal v-model="isAlertsOpen">
+    <AppNotificationsList />
+  </UModal>
 </template>
 
 <script setup lang="ts">
 const actionsButtons = [
   {
     icon: "famicons:calendar-outline",
+    onClick: openCalendar,
   },
   {
     icon: "fluent:alert-16-regular",
+    onClick: openAlerts,
   },
 ];
+
+const isAlertsOpen = ref(false);
 
 function openCalendar() {
   console.log("Open calendar");
 }
 
-function openChat() {
-  console.log("Open chat");
-}
-
 function openAlerts() {
-  console.log("Open alerts");
+  isAlertsOpen.value = !isAlertsOpen.value;
 }
 </script>

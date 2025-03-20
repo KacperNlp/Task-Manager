@@ -1,7 +1,10 @@
 export default defineNuxtPlugin((nuxtApp) => {
+    const toast = useToast();
+
     const projectsStore = useProjectsStore();
     const usersStore = useUsersStore();
     const messagesStore = useMessagesStore();
+    const notificationsStore = useNotificationsStore();
 
     let ws: WebSocket | null = null;
 
@@ -20,8 +23,15 @@ export default defineNuxtPlugin((nuxtApp) => {
                 messagesStore.addMessage(res);
             } else if(res.type === "messages") {
                 messagesStore.setMessages(res.messages);
-            } else if(res.type === "task") {
-
+            } else if(res.type === "notification") {
+                notificationsStore.addNotification(res.data);
+                
+                toast.add({
+                    title: "New Task Assigned",
+                    description: data.message,
+                    color: "blue",
+                    timeout: 5000,
+                })
             }
         }
 
