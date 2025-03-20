@@ -1,8 +1,24 @@
 import { WebSocketServer, WebSocket  } from "ws";
 
+interface Message {
+  _id: string;
+  projectId: string;
+  user: string;
+  text: string;
+  date: Date;
+}
+
+interface DataObject {
+  type: string
+  messages: Message[],
+}
+
 import Message from "./models/Messages";
+import Project from "./models/Project";
 
 const wss = new WebSocketServer({ port: 8081 });
+const userConnections = new Map();
+const projectSubscriptions = new Map();
 
 export default function websocketSetup() {
     wss.on("connection", (ws: WebSocket) => {
@@ -12,6 +28,13 @@ export default function websocketSetup() {
       
           if(messageObject.type === "join") {
             console.log("Client joined project", messageObject.projectId);
+            
+            userConnections.set(messageObject.userId, ws);
+
+            if (!projectSubscriptions.has(messageObject.projectId)) {
+              projectSubscriptions.set(messageObject.projectId, new Set());
+            }
+            projectSubscriptions.get(messageObject.projectId).add(messageObject.userId);
       
             const projectMessages = await Message.find({ projectId: messageObject.projectId }).populate("user", "name").sort({ date: 1 }).exec();
       
@@ -24,14 +47,12 @@ export default function websocketSetup() {
 
             const projectMessages = await Message.find({ projectId: messageObject.projectId }).populate("user", "name").sort({ date: 1 }).exec();
 
-            wss.clients.forEach(client => {
-              if(client.readyState === WebSocket.OPEN) {
-                client.send(JSON.stringify({
-                  type: "messages",
-                  messages: projectMessages
-                }));
-              }
+            notifyProjectUsers(messageObject.projectId, {
+              type: "messages",
+              messages: projectMessages,
             });
+          } else if(messageObject.type === "task") {
+            console.log("Client joined task", messageObject.taskId);
           }
         });
         
@@ -40,3 +61,16 @@ export default function websocketSetup() {
         });
     });
 }
+
+const notifyProjectUsers = async (projectId: string, data: DataObject) => {
+  const project = await Project.findById(projectId).populate("users");
+
+  if (!project) return;
+
+  project.users.forEach((user) => {
+    const userSocket = userConnections.get(user._id.toString());
+    if (userSocket && userSocket.readyState === WebSocket.OPEN) {
+      userSocket.send(JSON.stringify(data));
+    }
+  });
+};

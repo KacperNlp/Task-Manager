@@ -10,7 +10,7 @@ export default defineNuxtPlugin((nuxtApp) => {
         ws = new WebSocket(`ws://localhost:8081/`); 
 
         ws.onopen = () => {
-            ws?.send(JSON.stringify({ type: "join", projectId: projectId }));
+            ws?.send(JSON.stringify({ type: "join", projectId: projectId, userId: usersStore.loggedUser?._id }));
         };
 
         ws.onmessage = (event) => {
@@ -20,8 +20,9 @@ export default defineNuxtPlugin((nuxtApp) => {
                 messagesStore.addMessage(res);
             } else if(res.type === "messages") {
                 messagesStore.setMessages(res.messages);
+            } else if(res.type === "task") {
+
             }
-            
         }
 
         ws.onclose = () => console.log("WebSocket closed");
