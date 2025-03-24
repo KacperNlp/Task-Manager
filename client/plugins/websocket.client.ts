@@ -28,7 +28,7 @@ export default defineNuxtPlugin((nuxtApp) => {
                 
                 toast.add({
                     title: "New Task Assigned",
-                    description: data.message,
+                    description: res.data.message,
                     color: "blue",
                     timeout: 5000,
                 })

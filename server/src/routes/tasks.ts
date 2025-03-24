@@ -48,7 +48,7 @@ router.get("/:id", async (req: Request, res: Response) => {
 
 router.post("/add", async (req: Request, res: Response) => {
   try {
-    const taskData = { ...req.body, user_id: req.cookies.user_id };
+    const taskData = { ...req.body, user_id: req.body.userId };
     const task = new Task(taskData);
     const savedTask = await task.save();
 
@@ -64,8 +64,10 @@ router.post("/add", async (req: Request, res: Response) => {
       message: notificationMessage,
     });
 
-    const userSocket = userConnections.get(req.cookies.user_id.toString());
+    const userSocket = userConnections.get(req.body.userId.toString());
+    
     if (userSocket && userSocket.readyState === WebSocket.OPEN) {
+      console.log( WebSocket.OPEN);
       userSocket.send(JSON.stringify({
         type: "notification",
         data: {
