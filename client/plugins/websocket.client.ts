@@ -39,7 +39,6 @@ export default defineNuxtPlugin((nuxtApp) => {
         ws.onerror = (error) => console.error("WebSocket error:", error);
     }
 
-
     const sendMessage = (message: string) => {
         if(usersStore.loggedUser === null) return;
 

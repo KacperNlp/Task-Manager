@@ -1,5 +1,5 @@
 <template>
-  <ul class="flex gap-8">
+  <ul class="flex gap-3 md:gap-8">
     <li v-for="(actionBtn, id) in actionsButtons" @key="id">
       <Icon
         :name="actionBtn.icon"

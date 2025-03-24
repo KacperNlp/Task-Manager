@@ -1,8 +1,8 @@
 <template>
   <section
-    class="fixed bg-zinc-900 h-screen z-10 border-r border-r-zinc-600 z-1 duration-300"
+    class="fixed bg-zinc-900 h-screen w-screen md:w-[300px] z-10 border-r border-r-zinc-600 z-1 duration-500"
     :class="{
-      '-translate-x-[270px]': isSidebarActive,
+      '-translate-x-[100dvw] md:-translate-x-[300px]': isSidebarActive,
     }"
   >
     <div class="flex items-center gap-2 h-[88px] px-5 py-6">
@@ -10,20 +10,10 @@
       <h2 class="text-xl font-semibold mr-10">Project M.</h2>
       <button
         @click="toggleSidebar"
-        aria-label="Change sidebar visbility"
-        class="flex items-center"
-        :class="{ 'translate-x-[100px]': isSidebarActive }"
+        aria-label="Hide sidebar"
+        class="flex items-center ml-auto"
       >
-        <Icon
-          v-show="isSidebarActive"
-          name="mingcute:arrows-right-line"
-          class="bg-gray-400 text-2xl"
-        />
-        <Icon
-          v-show="!isSidebarActive"
-          name="mingcute:arrows-left-line"
-          class="bg-gray-400 text-2xl"
-        />
+        <Icon name="mingcute:arrows-left-line" class="bg-gray-400 text-2xl" />
       </button>
     </div>
     <nav class="px-5">
@@ -86,8 +76,16 @@
 <script setup lang="ts">
 const { $websocket } = useNuxtApp();
 
+const emit = defineEmits(["changeSidebarVisibility"]);
+
+const props = defineProps({
+  isSidebarActive: {
+    type: Boolean,
+    required: true,
+  },
+});
+
 const store = useProjectsStore();
-const isSidebarActive = ref(false);
 const formIsActive = ref(false);
 
 const links = [
@@ -118,7 +116,7 @@ function isSelectedProject(projectId: string) {
 }
 
 function toggleSidebar() {
-  isSidebarActive.value = !isSidebarActive.value;
+  emit("changeSidebarVisibility", !props.isSidebarActive);
 }
 
 function handleToggleAddNewProjectForm() {

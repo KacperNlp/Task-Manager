@@ -1,5 +1,5 @@
 <template>
-  <section class="relative w-full max-w-md">
+  <section class="relative w-full max-w-md md:ml-auto">
     <UForm
       :state="search"
       class="space-y-4 w-full max-w-[650px] md:min-w-96"

@@ -6,7 +6,7 @@
       :popper="{ placement: 'bottom-start' }"
     >
       <div class="flex gap-3 items-center">
-        <div class="flex flex-col items-end text-sm">
+        <div class="hidden md:flex flex-col items-end text-sm">
           <strong v-if="store.isLoggedUserLoaded">{{
             loggedUserNameAndSurname
           }}</strong>

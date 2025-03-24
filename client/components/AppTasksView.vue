@@ -1,5 +1,5 @@
 <template>
-  <section class="grid grid-cols-3 gap-3">
+  <section class="grid grid-cols-1 lg:grid-cols-3 gap-3">
     <AppColumnSection>
       <AppColumnHeadline
         :count="tasksStore.notStartedTasks.length"
