@@ -1,6 +1,6 @@
 <template>
   <section
-    class="fixed bg-zinc-900 h-screen w-screen md:w-[300px] z-10 border-r border-r-zinc-600 z-1 duration-500"
+    class="fixed top-0 bg-zinc-900 h-screen w-screen md:w-[300px] z-10 border-r border-r-zinc-600 z-1 duration-500"
     :class="{
       '-translate-x-[100dvw] md:-translate-x-[300px]': isSidebarActive,
     }"

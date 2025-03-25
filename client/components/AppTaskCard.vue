@@ -3,6 +3,10 @@
     class="relative py-4 px-2 lg:px-4 rounded-md hover:shadow-md duration-200 bg-zinc-950 cursor-pointer"
   >
     <article>
+      <span
+        class="absolute top-0 left-0 w-full h-full"
+        @click="openTask"
+      ></span>
       <AppTaskStatus :task-status="task.taskType" />
       <h3 class="text-base font-semibold mt-3">
         {{ task.title }}
@@ -75,7 +79,9 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const emit = defineEmits(["updateTasks", "updateTaskStatus"]);
+const emit = defineEmits(["updateTasks", "updateTaskStatus", "openTask"]);
+
+const toast = useToast();
 
 const isTaskDone = computed(() => props.task.status === "Done");
 const btnIcon = computed(() =>
@@ -98,6 +104,13 @@ async function deleteTask() {
       credentials: "include",
     });
 
+    toast.add({
+      id: "success_delete_task",
+      title: "Deleted task",
+      description: "Task deleted successfully",
+      color: "green",
+    });
+
     emit("updateTasks");
   } catch (error) {
     console.error(error);
@@ -114,9 +127,20 @@ async function changeTaskStatus() {
       }
     );
 
+    toast.add({
+      id: "success_change_task_status",
+      title: "Changed task status",
+      description: res.message,
+      color: "green",
+    });
+
     emit("updateTaskStatus", res.task);
   } catch (error) {
     console.error(error);
   }
+}
+
+function openTask() {
+  emit("openTask");
 }
 </script>

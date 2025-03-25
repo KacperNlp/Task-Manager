@@ -1,6 +1,8 @@
 import type { RegisterUser } from '../types/types'
 
 export function useAuth() {
+    const toast = useToast();
+
     const login = async (email: string, password: string) => {
         try {
             const res = await $fetch<{ success?: boolean }>('http://localhost:8080/login', {
@@ -12,9 +14,10 @@ export function useAuth() {
                 body: JSON.stringify({ email, password })
             });
 
+            console.log(res);
             return res?.success;
-        } catch (error) {
-            console.error("Login Error:", error);
+        } catch (error: any) {
+            errorHandler(error);
         }
     }
 
@@ -30,8 +33,8 @@ export function useAuth() {
             });
 
             return res?.success;
-        } catch (error) {
-            console.error("Register Error:", error);
+        } catch (error: any) {
+            errorHandler(error);
         }
     }
 
@@ -46,9 +49,20 @@ export function useAuth() {
             });
 
             return res?.success;
-        } catch (error) {
-            console.error("Logout Error:", error);
+        } catch (error: any) {
+            errorHandler(error);
         }
+    }
+
+    const errorHandler = (error: any) => {
+        const message = error.response?._data?.message ? error.response._data.message : "Something went wrong";
+        toast.add({
+            title: "Error",
+            description: message,
+            color: "red",
+        });
+
+        throw new Error(message);
     }
 
     return {  login, register, logout };

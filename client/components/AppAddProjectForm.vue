@@ -45,6 +45,7 @@ import UsersManager from "../services/UsersManager";
 import type { User, NewProject } from "../types/types";
 
 const store = useProjectsStore();
+const toast = useToast();
 
 const emit = defineEmits(["closeForm"]);
 
@@ -71,6 +72,13 @@ async function createNewProject() {
     await ProjectsManager.createProject(form);
     await store.fetchProjects();
     emit("closeForm");
+
+    toast.add({
+      id: "success_create_project",
+      title: "Success",
+      description: "Project added successfully",
+      color: "green",
+    });
   } catch (err) {
     console.error(err);
   }

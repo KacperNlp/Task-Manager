@@ -62,6 +62,7 @@ definePageMeta({
 const { login, register } = useAuth();
 
 const router = useRouter();
+const toast = useToast();
 
 const userHasAccount = ref(true);
 const form = reactive({
@@ -104,7 +105,13 @@ async function submitForm(e: Event) {
       isSuccesfullyVerified = await login(form.email, form.password);
     } else {
       if (form.password !== form.repeatPassword) {
-        alert("Passwords do not match");
+        toast.add({
+          id: "error",
+          title: "Error",
+          description: "Passwords do not match",
+          color: "red",
+        });
+
         return;
       }
 
@@ -114,6 +121,14 @@ async function submitForm(e: Event) {
     if (isSuccesfullyVerified) {
       router.push("/");
     }
+
+    toast.clear();
+    toast.add({
+      id: "success",
+      title: "Success",
+      description: "You have been logged in",
+      color: "green",
+    });
   } catch (error) {
     console.error(error);
   }

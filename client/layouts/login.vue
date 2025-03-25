@@ -1,5 +1,8 @@
 <template>
-  <main>
-    <slot />
-  </main>
+  <div>
+    <main>
+      <slot />
+    </main>
+    <UNotifications />
+  </div>
 </template>

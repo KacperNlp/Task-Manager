@@ -104,13 +104,22 @@ router.put("/status/:id", async (req: Request, res: Response) => {
   try {
     const task = await Task.findById(req.params.id);
 
-    if (task.status === "NotStarted") task.status = "InProgress";
-    else if (task.status === "InProgress") task.status = "Done";
+    if (!task) return res.status(404).json({ message: "Task not found" });
+
+    let message = "";
+
+    if (task.status === "NotStarted") {
+      task.status = "InProgress";
+      message = "Task started";
+    } else if (task.status === "InProgress") {
+      task.status = "Done";
+      message = "Task completed";
+    } 
 
     await task.save();
 
     res.json({
-      message: "Task status updated successfully",
+      message,
       updatedTask: task,
     });
   } catch (err) {

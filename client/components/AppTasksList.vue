@@ -12,7 +12,7 @@
           :task="task"
           @updateTasks="emit('updateTasks')"
           @updateTaskStatus="updateTaskStatus"
-          @click="openTask(task._id)"
+          @openTask="openTask(task._id)"
         />
       </li>
     </template>
