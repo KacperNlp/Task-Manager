@@ -3,7 +3,7 @@ export default defineAppConfig({
       primary: 'green',
       gray: 'cool',
       notifications: {
-        position: 'left-[50%] translate-x-[-50%]'
+        position: 'top-0 bottom-auto left-[50%] translate-x-[-50%]'
       }
     }
 })

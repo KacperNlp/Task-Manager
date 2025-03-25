@@ -83,6 +83,13 @@ async function addTask() {
     form.title = "";
     form.description = "";
     form.date = "";
+
+    toast.add({
+      id: "success_create_task_notification",
+      title: "Success",
+      description: "Task added successfully",
+      color: "green",
+    });
   } catch (error) {
     console.error(error);
   }
