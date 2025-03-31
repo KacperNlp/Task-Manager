@@ -46,6 +46,18 @@ router.get("/:id", async (req: Request, res: Response) => {
   }
 });
 
+router.get("/user/:id", async (req: Request, res: Response) => {
+  try {
+    const tasks = await Task.find({
+      user_id: req.params.id,
+    });
+  
+    res.json(tasks);
+  } catch (err) {
+    return handleError(res, err);
+  }
+});
+
 router.post("/add", async (req: Request, res: Response) => {
   try {
     const taskData = { ...req.body, user_id: req.body.userId };

@@ -19,8 +19,8 @@
     <nav class="px-5">
       <ul class="flex flex-col gap-6 border-b border-b-zinc-600 py-6">
         <li v-for="link in links">
-          <a
-            href="#"
+          <NuxtLink
+            :to="link.to"
             class="group flex items-center gap-4 hover:text-emerald-500"
           >
             <Icon
@@ -28,7 +28,7 @@
               class="bg-gray-400 text-2xl group-hover:bg-emerald-500"
             />
             <span>{{ link.text }}</span>
-          </a>
+          </NuxtLink>
         </li>
       </ul>
       <div class="flex justify-between mt-6 mb-5">
@@ -92,22 +92,22 @@ const links = [
   {
     text: "Home",
     icon: "clarity:blocks-group-solid",
-  },
-  {
-    text: "Messages",
-    icon: "hugeicons:message-02",
+    to: "/",
   },
   {
     text: "Tasks",
     icon: "fluent:task-list-rtl-24-regular",
+    to: "/tasks",
   },
   {
     text: "Members",
     icon: "mynaui:users-group",
+    to: "/members",
   },
   {
     text: "Settings",
     icon: "lsicon:setting-outline",
+    to: "/settings",
   },
 ];
 

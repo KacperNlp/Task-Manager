@@ -23,4 +23,15 @@ export default abstract class TasksManager {
 
         return tasks;
     }
+
+    static async getTasksOfLoggedUser(loggedUserId: string) {
+        const config = useRuntimeConfig();
+
+        const tasks = await $fetch<Task[]>(`${config.public.apiURL}/tasks/user/${loggedUserId}`, {
+            method: "GET",
+            credentials: "include"
+        });
+
+        return tasks;
+    }
 }
