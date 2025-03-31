@@ -7,7 +7,9 @@
       />
       <div class="w-full">
         <div class="flex justify-between mb-3">
-          <strong class="block text-sm">{{ comment.user.email }}</strong>
+          <strong class="block text-sm">{{
+            isCommentFromLoggedUser ? "You" : comment.user.email
+          }}</strong>
           <span class="text-sm font-bold text-gray-400">{{
             dateOfComment
           }}</span>
@@ -27,6 +29,8 @@ interface Props {
   comment: Comment;
 }
 
+const user = useUsersStore();
+
 const props = defineProps<Props>();
 
 const dateOfComment = computed(() => {
@@ -40,5 +44,9 @@ const dateOfComment = computed(() => {
   if (diffInDays === 1) return "1 dzień temu";
   if (diffInDays <= 4) return `${diffInDays} dni temu`; // For 2, 3, or 4 days
   return `${diffInDays} dni temu`; // For 5+ days
+});
+
+const isCommentFromLoggedUser = computed(() => {
+  return props.comment.user._id === user.loggedUser?._id;
 });
 </script>

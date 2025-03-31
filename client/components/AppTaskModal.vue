@@ -45,7 +45,7 @@
             </UForm>
           </div>
           <section
-            class="mt-8 p-2 pt-4 border-t border-t-zinc-600 h-[300px] overflow-y-scroll"
+            class="mt-8 p-2 pt-4 border-t border-t-zinc-600 h-[300px] overflow-y-auto"
           >
             <AppCommentsList :comments="comments" />
           </section>
