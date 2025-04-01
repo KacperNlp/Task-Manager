@@ -21,6 +21,7 @@
         <li v-for="link in links">
           <NuxtLink
             :to="link.to"
+            @click="toggleSidebar"
             class="group flex items-center gap-4 hover:text-emerald-500"
           >
             <span class="link-icon flex items-center justify-center">
@@ -127,6 +128,7 @@ function handleToggleAddNewProjectForm() {
 
 function handleClickChangeProject(projectId: string) {
   store.changeCurrentProject(projectId);
+  toggleSidebar();
 
   $websocket.connect(projectId);
 }
