@@ -1,20 +1,36 @@
 <template>
   <AppMainTitle class="mb-8">Twoje zadania</AppMainTitle>
   <div class="flex flex-col gap-4 md:table w-full" role="table">
-    <div class="hide md:table-header-group" role="rowgroup">
+    <div class="hidden md:table-header-group" role="rowgroup">
       <div class="md:table-row" role="row">
-        <div class="md:table-cell" role="columnheader">
+        <div
+          class="md:table-cell md:py-3 md:px-2 md:bg-gray-800"
+          role="columnheader"
+        >
           <span>Nazwa</span>
         </div>
-        <div class="md:table-cell" role="columnheader">
+        <div
+          class="md:table-cell md:py-3 md:px-2 md:bg-gray-800"
+          role="columnheader"
+        >
           <span>Opis</span>
         </div>
-        <div class="md:table-cell" role="columnheader">
+        <div
+          class="md:table-cell md:py-3 md:px-2 md:bg-gray-800"
+          role="columnheader"
+        >
           <span>Data</span>
         </div>
-        <div class="md:table-cell" role="columnheader">
+        <div
+          class="md:table-cell md:py-3 md:px-2 md:bg-gray-800"
+          role="columnheader"
+        >
           <span>Status</span>
         </div>
+        <div
+          class="md:table-cell md:py-3 md:px-2 md:bg-gray-800"
+          role="columnheader"
+        ></div>
       </div>
     </div>
     <div
