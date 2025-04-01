@@ -17,16 +17,18 @@
       </button>
     </div>
     <nav class="px-5">
-      <ul class="flex flex-col gap-6 border-b border-b-zinc-600 py-6">
+      <ul class="nav flex flex-col gap-6 border-b border-b-zinc-600 py-6">
         <li v-for="link in links">
           <NuxtLink
             :to="link.to"
             class="group flex items-center gap-4 hover:text-emerald-500"
           >
-            <Icon
-              :name="link.icon"
-              class="bg-gray-400 text-2xl group-hover:bg-emerald-500"
-            />
+            <span class="link-icon flex items-center justify-center">
+              <Icon
+                :name="link.icon"
+                class="bg-gray-400 text-2xl group-hover:bg-emerald-500"
+              />
+            </span>
             <span>{{ link.text }}</span>
           </NuxtLink>
         </li>
@@ -129,3 +131,13 @@ function handleClickChangeProject(projectId: string) {
   $websocket.connect(projectId);
 }
 </script>
+
+<style>
+.nav .router-link-active {
+  color: #10b981;
+
+  .link-icon span {
+    background-color: #10b981;
+  }
+}
+</style>
