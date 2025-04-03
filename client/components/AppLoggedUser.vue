@@ -33,12 +33,17 @@
       </template>
 
       <template #item="{ item }">
-        <span class="truncate">{{ item.label }}</span>
+        <div
+          @click="item.onClick"
+          class="cursor-pointer flex items-center justify-between w-full"
+        >
+          <span class="truncate">{{ item.label }}</span>
 
-        <UIcon
-          :name="item.icon"
-          class="flex-shrink-0 h-4 w-4 text-gray-400 dark:text-gray-500 ms-auto"
-        />
+          <UIcon
+            :name="item.icon"
+            class="flex-shrink-0 h-4 w-4 text-gray-400 dark:text-gray-500 ms-auto"
+          />
+        </div>
       </template>
     </UDropdown>
   </div>
@@ -68,20 +73,7 @@ const items = [
     {
       label: "Settings",
       icon: "i-heroicons-cog-8-tooth",
-    },
-  ],
-  [
-    {
-      label: "Documentation",
-      icon: "i-heroicons-book-open",
-    },
-    {
-      label: "Changelog",
-      icon: "i-heroicons-megaphone",
-    },
-    {
-      label: "Status",
-      icon: "i-heroicons-signal",
+      onClick: () => router.push("/settings"),
     },
   ],
   [
