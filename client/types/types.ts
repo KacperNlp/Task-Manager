@@ -38,6 +38,18 @@ interface User {
   role: UserRoles
 }
 
+interface UpdateUser {
+  name: string,
+  surname: string,
+  email: string,
+}
+
+interface UpdateUserPassword {
+  password?: string | undefined,
+  confirmPassword?: string | undefined,
+  enableChangePassword?: boolean | undefined
+}
+
 interface RegisterUser {
   name: string,
   surname: string,
@@ -88,5 +100,9 @@ interface Notification {
   taskId: string,
 }
 
+interface ResponseMessage {
+  message: string
+}
+
 export { UserRoles, TaskStatus, TaskType }
-export type { Task, NewTask, Comment, User, RegisterUser, Project, NewProject, Roles, Message, MessageToSend, Notification };
+export type { Task, NewTask, Comment, User, UpdateUser, UpdateUserPassword, RegisterUser, Project, NewProject, Roles, Message, MessageToSend, Notification, ResponseMessage };

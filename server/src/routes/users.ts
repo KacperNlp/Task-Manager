@@ -115,9 +115,46 @@ router.get("/users/all/:projectId", async (req: Request, res: Response) => {
 
 router.get("/users/logged", async (req: Request, res: Response) => {
   try {
-    const loggedUser = await User.findById(req.cookies.user_id);
+    const loggedUser = await User.findById(req.cookies.user_id).select("-password");
 
     res.status(200).json(loggedUser);
+  } catch (err) {
+    return handleError(res, err);
+  }
+});
+
+router.put("/users/logged/update", async (req: Request, res: Response) => {
+  try {
+    const { name, surname, email } = req.body;
+    const user = await User.findById(req.cookies.user_id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found!" });
+    }
+    
+    user.name = name;
+    user.surname = surname;
+    user.email = email;
+
+    await user.save();
+
+    res.status(200).json({ message: "User updated successfully" });
+  } catch (err) {
+    return handleError(res, err);
+  }
+});
+
+router.put("/users/logged/update/password", async (req: Request, res: Response) => {
+  try {
+    const { password } = req.body;
+    const user = await User.findById(req.cookies.user_id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found!" });
+    }
+
+    user.password =  await bcrypt.hash(password, 10);
+    await user.save();
+
+    res.status(200).json({ message: "Password updated successfully" });
   } catch (err) {
     return handleError(res, err);
   }
