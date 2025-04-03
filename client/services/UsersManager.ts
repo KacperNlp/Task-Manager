@@ -22,4 +22,12 @@ export default abstract class UserManager {
 
         return res;
     }
+
+    static async updateUser(user: User) {
+        const config = useRuntimeConfig();
+
+        const res = await $fetch<User>(`${config.public.apiURL}/users/update`, {
+            method: "PUT",
+        });
+    }
 }
