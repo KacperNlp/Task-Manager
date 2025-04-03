@@ -34,7 +34,7 @@
     </div>
   </div>
 
-  <UModal v-model="isTaskModalActive" :ui="{ content: 'sm:max-w-xl' }">
+  <UModal v-model="isTaskModalActive" class="task-modal">
     <AppTaskModal :task-id="clickedTaskId" @closeMoadal="handleCloseModal" />
   </UModal>
 </template>
