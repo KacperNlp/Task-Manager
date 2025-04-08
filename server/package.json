@@ -7,7 +7,9 @@
     "watch": "tsx watch ./src/app.ts",
     "dev": "ts-node app.ts",
     "build": "tsc",
-    "start": "node dist/app.js"
+    "start": "node dist/app.js",
+    "lint": "eslint src/**/*.{ts,tsx}",
+    "lint:fix": "eslint --fix src/**/*.{ts,tsx}"
   },
   "author": "",
   "license": "ISC",
