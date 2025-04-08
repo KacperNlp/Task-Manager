@@ -19,7 +19,9 @@ async function registerUser(req: Request, res: Response) {
         });
         user.save();
 
-        const token = jwt.sign({ email: user.email, id: user._id }, process.env.JWT_SECRET, {
+        const JWT_SECRET = process.env.JWT_SECRET || 'secret';
+
+        const token = jwt.sign({ email: user.email, id: user._id }, JWT_SECRET, {
             expiresIn: '12h',
         });
 
@@ -55,7 +57,9 @@ async function loginUser(req: Request, res: Response) {
             return res.status(400).json({ message: 'Invalid credentials' });
         }
 
-        const token = jwt.sign({ email: user.email, id: user._id }, process.env.JWT_SECRET, {
+        const JWT_SECRET = process.env.JWT_SECRET || 'secret';
+
+        const token = jwt.sign({ email: user.email, id: user._id }, JWT_SECRET, {
             expiresIn: '12h',
         });
 
