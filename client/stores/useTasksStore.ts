@@ -50,7 +50,17 @@ export const useTasksStore = defineStore('tasks', {
                 return state.tasks.filter(task => task.status === 'NotStarted');
             }
         },
-        loggedUserTasks: state => state.tasksOfLoggedUser,
+        loggedUserTasks: state => {
+            const searchStore = useSearchStore();
+            const search = searchStore.getSearch;
+            if (search) {
+                return state.tasksOfLoggedUser.filter(task =>
+                    task.title.toLowerCase().includes(search.toLowerCase())
+                );
+            } else {
+                return state.tasksOfLoggedUser;
+            }
+        },
     },
 
     actions: {
