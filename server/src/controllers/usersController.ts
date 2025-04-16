@@ -112,6 +112,25 @@ async function getAllUsers(req: Request, res: Response) {
     }
 }
 
+async function getAllUsersNotAssignedToProject(req: Request, res: Response) {
+    try {
+        const { projectId } = req.params;
+        const project = await Project.findById(projectId).select('users');
+
+        if (!project) {
+            return res.status(404).json({ message: 'Project not found' });
+        }
+
+        const users = await User.find({ _id: { $nin: project.users } }).select(
+            'name surname role _id'
+        );
+
+        res.status(200).json(users);
+    } catch (err) {
+        return handleError(res, err);
+    }
+}
+
 async function getLoggedUser(req: Request, res: Response) {
     try {
         const loggedUser = await User.findById(req.cookies.user_id).select('-password');
@@ -164,6 +183,7 @@ export {
     loginUser,
     logoutUser,
     getAllUsers,
+    getAllUsersNotAssignedToProject,
     getLoggedUser,
     updateUser,
     updateUserPassword,

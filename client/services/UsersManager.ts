@@ -1,13 +1,27 @@
-import type { User, UpdateUser, UpdateUserPassword, ResponseMessage } from "../types/types";
+import type { User, UpdateUser, UpdateUserPassword, ResponseMessage } from '../types/types';
 
 export default abstract class UserManager {
     static async getUsers(projectId: string | null = null) {
         const config = useRuntimeConfig();
 
         const res = await $fetch<User[]>(`${config.public.apiURL}/users/all/${projectId}`, {
-            method: "GET",
-            credentials: "include",
+            method: 'GET',
+            credentials: 'include',
         });
+
+        return res;
+    }
+
+    static async getUsersNotAssignedToProject(projectId: string) {
+        const config = useRuntimeConfig();
+
+        const res = await $fetch<User[]>(
+            `${config.public.apiURL}/users/all/not-assigned/${projectId}`,
+            {
+                method: 'GET',
+                credentials: 'include',
+            }
+        );
 
         return res;
     }
@@ -16,8 +30,8 @@ export default abstract class UserManager {
         const config = useRuntimeConfig();
 
         const res = await $fetch<User>(`${config.public.apiURL}/users/logged`, {
-            method: "GET",
-            credentials: "include",
+            method: 'GET',
+            credentials: 'include',
         });
 
         return res;
@@ -27,8 +41,8 @@ export default abstract class UserManager {
         const config = useRuntimeConfig();
 
         const res = await $fetch<ResponseMessage>(`${config.public.apiURL}/users/logged/update`, {
-            method: "PUT",
-            credentials: "include",
+            method: 'PUT',
+            credentials: 'include',
             body: user,
         });
 
@@ -38,11 +52,14 @@ export default abstract class UserManager {
     static async updateUserPassword(user: UpdateUserPassword) {
         const config = useRuntimeConfig();
 
-        const res = await $fetch<ResponseMessage>(`${config.public.apiURL}/users/logged/update/password`, {
-            method: "PUT",
-            credentials: "include",
-            body: user,
-        });
+        const res = await $fetch<ResponseMessage>(
+            `${config.public.apiURL}/users/logged/update/password`,
+            {
+                method: 'PUT',
+                credentials: 'include',
+                body: user,
+            }
+        );
 
         return res;
     }

@@ -1,12 +1,12 @@
-import type { Project, NewProject } from "../types/types";
+import type { Project, NewProject } from '../types/types';
 
 export default abstract class ProjectsManager {
     static async getProjects() {
         const config = useRuntimeConfig();
 
         const res = await $fetch<Project[]>(`${config.public.apiURL}/projects`, {
-            method: "GET",
-            credentials: "include",
+            method: 'GET',
+            credentials: 'include',
         });
 
         return res;
@@ -17,11 +17,21 @@ export default abstract class ProjectsManager {
         const store = useProjectsStore();
 
         await $fetch(`${config.public.apiURL}/projects`, {
-            method: "POST",
-            credentials: "include",
+            method: 'POST',
+            credentials: 'include',
             body: JSON.stringify(data),
         });
 
         store.fetchProjects();
+    }
+
+    static async addUserToProject(projectId: string, userId: string) {
+        const config = useRuntimeConfig();
+
+        await $fetch(`${config.public.apiURL}/projects/${projectId}/users`, {
+            method: 'PUT',
+            credentials: 'include',
+            body: JSON.stringify({ userId }),
+        });
     }
 }
