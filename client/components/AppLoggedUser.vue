@@ -20,7 +20,11 @@
                         <AppTextPlaceholder size="sm" />
                     </div>
                 </div>
-                <UAvatar src="https://avatars.githubusercontent.com/u/739984?v=4" />
+                <UAvatar
+                    :alt="loggedUserNameAndSurname"
+                    size="sm"
+                    :title="loggedUserNameAndSurname"
+                />
             </div>
 
             <template #account="{ item }">
