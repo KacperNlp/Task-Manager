@@ -16,9 +16,8 @@ const router = express.Router();
 async function getTasks(req: Request, res: Response) {
     try {
         const tasks = await Task.find({
-            // user_id: req.cookies.user_id,
             projectId: req.query.projectId,
-        });
+        }).populate('user_id', 'name surname email role');
 
         const tasksWithComments = await Promise.all(
             tasks.map(async task => {
