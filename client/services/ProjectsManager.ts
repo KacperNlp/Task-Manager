@@ -1,4 +1,4 @@
-import type { Project, NewProject } from '../types/types';
+import type { Project, NewProject, User } from '../types/types';
 
 export default abstract class ProjectsManager {
     static async getProjects() {
@@ -33,5 +33,16 @@ export default abstract class ProjectsManager {
             credentials: 'include',
             body: JSON.stringify({ userId }),
         });
+    }
+
+    static async getUsers(projectId: string) {
+        const config = useRuntimeConfig();
+
+        const res = await $fetch<User[]>(`${config.public.apiURL}/projects/${projectId}/users`, {
+            method: 'GET',
+            credentials: 'include',
+        });
+
+        return res;
     }
 }

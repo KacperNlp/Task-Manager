@@ -12,9 +12,11 @@
         >
 
         <UAvatarGroup size="sm" :max="2">
-            <UAvatar src="https://avatars.githubusercontent.com/u/739984?v=4" alt="benjamincanac" />
-            <UAvatar src="https://avatars.githubusercontent.com/u/904724?v=4" alt="Atinux" />
-            <UAvatar src="https://avatars.githubusercontent.com/u/7547335?v=4" alt="smarroufin" />
+            <UAvatar
+                v-for="user in projectsStore.currentProjectUsers"
+                :key="user._id"
+                :alt="getUserAvatar(user.name, user.surname)"
+            />
         </UAvatarGroup>
     </div>
 
@@ -23,6 +25,8 @@
     </UModal>
 </template>
 <script setup lang="ts">
+const projectsStore = useProjectsStore();
+
 const isModalOpen = ref(false);
 
 function openInviteUserModal() {
@@ -31,5 +35,9 @@ function openInviteUserModal() {
 
 function closeInviteUserModal() {
     isModalOpen.value = false;
+}
+
+function getUserAvatar(userName: string, userSurname: string) {
+    return userName + ' ' + userSurname;
 }
 </script>

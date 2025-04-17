@@ -25,6 +25,17 @@ async function getProjects(req: Request, res: Response) {
     }
 }
 
+async function getUsers(req: Request, res: Response) {
+    try {
+        const { projectId } = req.params;
+        const project = await Project.findById(projectId).populate('users');
+
+        res.json(project?.users);
+    } catch (err) {
+        return handleError(res, err);
+    }
+}
+
 async function addUserToProject(req: Request, res: Response) {
     try {
         const { userId } = req.body;
@@ -53,4 +64,4 @@ async function addUserToProject(req: Request, res: Response) {
     }
 }
 
-export { createProject, getProjects, addUserToProject };
+export { createProject, getProjects, getUsers, addUserToProject };
