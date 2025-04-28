@@ -1,5 +1,6 @@
 import { nextTick } from 'vue';
 import { defineStore } from 'pinia';
+import { useFiltersStore } from './useFiltersStore';
 import ProjectsManager from '~/services/ProjectsManager';
 import type { Project, User } from '~/types/types';
 
@@ -28,16 +29,18 @@ export const useProjectsStore = defineStore('projects', {
                 this.currentProjectId = projectId;
 
                 const tasksStore = useTasksStore();
+                const filtersStore = useFiltersStore();
+
                 tasksStore.fetchTasks(projectId);
 
                 this.fetchCurrentProjectUsers();
+                filtersStore.resetFilters();
             }
         },
 
         async fetchCurrentProjectUsers() {
             if (!this.currentProjectId) return;
 
-            console.log(this.currentProjectUsers);
             try {
                 this.currentProjectUsers = await ProjectsManager.getUsers(this.currentProjectId);
             } catch (error) {
